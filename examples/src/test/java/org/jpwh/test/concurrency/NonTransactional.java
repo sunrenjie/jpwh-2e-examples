@@ -59,7 +59,7 @@ public class NonTransactional extends JPATest {
                you are in <em>synchronized</em> mode.
              */
             assertEquals(
-                em.createQuery("select i.name from Item i where i.id = :id)")
+                em.createQuery("select i.name from Item i where i.id = :id")
                     .setParameter("id", ITEM_ID).getSingleResult(),
                 "Original Name"
             );
@@ -73,7 +73,7 @@ public class NonTransactional extends JPATest {
                even without a system transaction.
              */
             assertEquals(
-                ((Item) em.createQuery("select i from Item i where i.id = :id)")
+                ((Item) em.createQuery("select i from Item i where i.id = :id")
                     .setParameter("id", ITEM_ID).getSingleResult()).getName(),
                 "New Name"
             );
@@ -129,7 +129,7 @@ public class NonTransactional extends JPATest {
             tx.begin();
             EntityManager em = JPA.createEntityManager();
             assertEquals(em.find(Item.class, ITEM_ID).getName(), "Original Name");
-            assertEquals(em.createQuery("select count(i) from Item i)").getSingleResult(), 2l);
+            assertEquals(em.createQuery("select count(i) from Item i").getSingleResult(), 2l);
             tx.commit();
             em.close();
         } finally {
@@ -177,7 +177,7 @@ public class NonTransactional extends JPATest {
         try {
             tx.begin();
             EntityManager em = JPA.createEntityManager();
-            assertEquals(em.createQuery("select count(i) from Item i)").getSingleResult(), 1l);
+            assertEquals(em.createQuery("select count(i) from Item i").getSingleResult(), 1l);
             tx.commit();
             em.close();
         } finally {

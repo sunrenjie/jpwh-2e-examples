@@ -58,7 +58,7 @@ public class ModelOperations {
         assertEquals(failedPropertyName, "auctionEnd");
 
         if (Locale.getDefault().getLanguage().equals("en"))
-            assertEquals(violation.getMessage(), "must be in the future");
+            assertEquals(violation.getMessage(), "must be a future date");
     }
 
 }

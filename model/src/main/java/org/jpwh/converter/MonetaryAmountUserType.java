@@ -1,6 +1,8 @@
 package org.jpwh.converter;
 
+import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
@@ -78,7 +80,7 @@ public class MonetaryAmountUserType
      * <code>Serializable</code>, you could return it directly.
      */
     public Serializable disassemble(Object value,
-                                    SessionImplementor session) {
+                                    SharedSessionContractImplementor session) {
         return value.toString();
     }
 
@@ -90,7 +92,7 @@ public class MonetaryAmountUserType
      * you could return it directly.
      */
     public Object assemble(Serializable cached,
-                           SessionImplementor session, Object owner) {
+                           SharedSessionContractImplementor session, Object owner) {
         return MonetaryAmount.fromString((String) cached);
     }
 
@@ -100,7 +102,7 @@ public class MonetaryAmountUserType
      * immutable, like <code>MonetaryAmount</code>, you can simply return the original.
      */
     public Object replace(Object original, Object target,
-                          SessionImplementor session, Object owner) {
+                          SharedSessionContractImplementor session, Object owner) {
         return original;
     }
 
@@ -125,7 +127,7 @@ public class MonetaryAmountUserType
      */
     public Object nullSafeGet(ResultSet resultSet,
                               String[] names,
-                              SessionImplementor session,
+                              SharedSessionContractImplementor session,
                               Object owner) throws SQLException {
 
         BigDecimal amount = resultSet.getBigDecimal(names[0]);
@@ -147,7 +149,7 @@ public class MonetaryAmountUserType
     public void nullSafeSet(PreparedStatement statement,
                             Object value,
                             int index,
-                            SessionImplementor session) throws SQLException {
+                            SharedSessionContractImplementor session) throws SQLException {
 
         if (value == null) {
             statement.setNull(

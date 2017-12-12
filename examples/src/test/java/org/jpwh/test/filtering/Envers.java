@@ -2,7 +2,7 @@ package org.jpwh.test.filtering;
 
 import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.envers.query.criteria.MatchMode;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.DefaultRevisionEntity;
