@@ -63,7 +63,7 @@ public enum DatabaseProduct {
                         "PostgreSQL XADataSource doesn't support connection URLs"
                     );
                 }
-                ds.getDriverProperties().put("serverName", "10.0.0.2");
+                ds.getDriverProperties().put("serverName", "127.0.0.1");
                 ds.getDriverProperties().put("databaseName", "test");
                 ds.getDriverProperties().put("user", "test");
                 ds.getDriverProperties().put("password", "test");

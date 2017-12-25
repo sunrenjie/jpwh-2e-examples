@@ -48,7 +48,7 @@
         <slf4j.impl.version>1.6.1</slf4j.impl.version>
 
         <!-- For small scale deployment, use the H2 RDBMS, all Java -->
-        <h2.version>1.3.171</h2.version>
+        <h2.version>1.4.196</h2.version>
 
         <!-- In Java SE you should use a JTA transaction manager as a JDBC connection pool, Bitronix is good -->
         <btm.version>2.1.4</btm.version>
