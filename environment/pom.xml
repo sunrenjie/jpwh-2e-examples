@@ -166,15 +166,14 @@
             <version>42.1.4</version>
         </dependency>
 
-        <!-- The tests should run on Oracle, you need to install the JDBC driver locally
+        <!-- Oracle JDBC driver has to be installed locally somewhere. -->
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc</artifactId>
-            <version>12cR1</version>
+            <version>12.2.0.1.0</version>
             <scope>system</scope>
-            <systemPath>/Users/cb/work/oracle/ojdbc6.jar</systemPath>
+            <systemPath>${project.basedir}/../lib/ojdbc8.jar</systemPath>
         </dependency>
-        -->
 
     </dependencies>
 
