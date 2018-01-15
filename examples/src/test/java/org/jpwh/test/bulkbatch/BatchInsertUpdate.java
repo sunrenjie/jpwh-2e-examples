@@ -9,13 +9,13 @@ import org.testng.annotations.Test;
 import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
 import java.util.Date;
-import java.util.logging.Logger;
+import org.jboss.logging.Logger;
 
 import static org.testng.Assert.assertEquals;
 
 public class BatchInsertUpdate extends JPATest {
 
-    final private static Logger log = Logger.getLogger(BatchInsertUpdate.class.getName());
+    final private static Logger log = Logger.getLogger(BatchInsertUpdate.class);
 
     @Override
     public void configurePersistenceUnit() throws Exception {

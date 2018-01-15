@@ -14,14 +14,11 @@ import javax.transaction.UserTransaction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class AuditLogging extends JPATest {
-
-    final private static Logger log = Logger.getLogger(AuditLogging.class.getName());
 
     @Override
     public void configurePersistenceUnit() throws Exception {

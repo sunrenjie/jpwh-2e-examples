@@ -10,14 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.transaction.UserTransaction;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import static org.testng.Assert.assertEquals;
 
 public class MappingEmbeddables extends JPATest {
-
-    private static final Logger LOG = Logger.getLogger(MappingEmbeddables.class.getName());
 
     @Override
     public void configurePersistenceUnit() throws Exception {

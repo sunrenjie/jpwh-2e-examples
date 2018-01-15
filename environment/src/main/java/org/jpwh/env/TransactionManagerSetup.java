@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import javax.transaction.Status;
 import javax.transaction.UserTransaction;
-import java.util.logging.Logger;
+import org.jboss.logging.Logger;
 
 /**
  * Provides a database connection pool with the Bitronix JTA transaction
@@ -23,8 +23,7 @@ public class TransactionManagerSetup {
 
     public static final String DATASOURCE_NAME = "myDS";
 
-    private static final Logger logger =
-        Logger.getLogger(TransactionManagerSetup.class.getName());
+    private static final org.jboss.logging.Logger logger = Logger.getLogger(TransactionManagerSetup.class);
 
     protected final Context context = new InitialContext();
     protected final PoolingDataSource datasource;
@@ -37,21 +36,21 @@ public class TransactionManagerSetup {
     public TransactionManagerSetup(DatabaseProduct databaseProduct,
                                    String connectionURL) throws Exception {
 
-        logger.fine("Starting database connection pool");
+        logger.info("Starting database connection pool");
 
-        logger.fine("Setting stable unique identifier for transaction recovery");
+        logger.info("Setting stable unique identifier for transaction recovery");
         TransactionManagerServices.getConfiguration().setServerId("myServer1234");
 
-        logger.fine("Disabling JMX binding of manager in unit tests");
+        logger.info("Disabling JMX binding of manager in unit tests");
         TransactionManagerServices.getConfiguration().setDisableJmx(true);
 
-        logger.fine("Disabling transaction logging for unit tests");
+        logger.info("Disabling transaction logging for unit tests");
         TransactionManagerServices.getConfiguration().setJournal("null");
 
-        logger.fine("Disabling warnings when the database isn't accessed in a transaction");
+        logger.info("Disabling warnings when the database isn't accessed in a transaction");
         TransactionManagerServices.getConfiguration().setWarnAboutZeroResourceTransaction(false);
 
-        logger.fine("Creating connection pool");
+        logger.info("Creating connection pool");
         datasource = new PoolingDataSource();
         datasource.setUniqueName(DATASOURCE_NAME);
         datasource.setMinPoolSize(1);
@@ -72,7 +71,7 @@ public class TransactionManagerSetup {
         this.databaseProduct = databaseProduct;
         databaseProduct.configuration.configure(datasource, connectionURL);
 
-        logger.fine("Initializing transaction and resource management");
+        logger.info("Initializing transaction and resource management");
         datasource.init();
     }
 
@@ -110,7 +109,7 @@ public class TransactionManagerSetup {
     }
 
     public void stop() throws Exception {
-        logger.fine("Stopping database connection pool");
+        logger.info("Stopping database connection pool");
         datasource.close();
         TransactionManagerServices.getTransactionManager().shutdown();
     }
