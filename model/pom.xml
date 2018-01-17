@@ -58,28 +58,6 @@
             <plugin>
                 <groupId>org.hibernate.orm.tooling</groupId>
                 <artifactId>hibernate-enhance-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jpwh</groupId>
-                        <artifactId>model</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <failOnError>true</failOnError>
-                            <!-- TODO: All false, the new enhancer breaks a lot of other things, eg. orphan-removal -->
-                            <enableLazyInitialization>false</enableLazyInitialization>
-                            <enableDirtyTracking>false</enableDirtyTracking>
-                            <enableAssociationManagement>false</enableAssociationManagement>
-                            <enableFieldAccessEnhancement>false</enableFieldAccessEnhancement>
-                        </configuration>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
