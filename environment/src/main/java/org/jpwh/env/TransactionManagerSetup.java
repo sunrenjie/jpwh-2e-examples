@@ -7,7 +7,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import javax.transaction.Status;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+
+import org.h2.engine.User;
 import org.jboss.logging.Logger;
 
 /**
@@ -77,6 +80,12 @@ public class TransactionManagerSetup {
 
     public Context getNamingContext() {
         return context;
+    }
+
+    public UserTransaction getUserTransaction(int timeout) throws SystemException {
+        UserTransaction ux = getUserTransaction();
+        ux.setTransactionTimeout(timeout);
+        return ux;
     }
 
     public UserTransaction getUserTransaction() {
