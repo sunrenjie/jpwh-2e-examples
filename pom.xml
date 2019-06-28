@@ -28,20 +28,20 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- The standardized API -->
         <hibernate.jpa21.api.version>1.0.0.Final</hibernate.jpa21.api.version>
 
         <!-- Hibernate's implementation -->
-        <hibernate.version>5.2.12.Final</hibernate.version>
+        <hibernate.version>5.4.3.Final</hibernate.version>
 
         <!-- The standardized Bean Validation API -->
         <validation.api.version>2.0.0.Final</validation.api.version>
 
         <!-- Hibernate's implementation -->
-        <hibernate.validator.version>6.0.5.Final</hibernate.validator.version>
+        <hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
         <javax-el.version>3.0.1-b04</javax-el.version>
 
         <!-- Everyone's favorite -->
