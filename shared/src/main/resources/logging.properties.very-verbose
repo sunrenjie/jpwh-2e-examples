@@ -1,0 +1,65 @@
+handlers = java.util.logging.ConsoleHandler
+
+java.util.logging.ConsoleHandler.level = ALL
+java.util.logging.ConsoleHandler.formatter = org.jpwh.shared.util.OneLineLogFormatter
+
+.level = ALL
+
+#################################################################################
+# Application
+#################################################################################
+
+org.jpwh.level = ALL
+
+#################################################################################
+# Infrastructure
+#################################################################################
+
+bitronix.tm.level = ALL
+org.jboss.ejb.client.level = ALL
+org.xnio.level = ALL
+org.jboss.remoting.level = ALL
+
+#################################################################################
+# Hibernate
+#################################################################################
+
+org.hibernate.level = ALL
+#org.hibernate.level = ALL
+#org.hibernate.level = FINEST
+
+# Debugging SQL execution with bound parameters
+org.hibernate.SQL.level = FINEST
+org.hibernate.type.descriptor.sql.BasicBinder.level = FINEST
+
+# Show CUD SQL generation on startup
+#org.hibernate.persister.entity.level = FINEST
+#org.hibernate.persister.collection.level = FINEST
+
+# Too noisy at FINEST level
+org.hibernate.type.BasicTypeRegistry.level=ALL
+org.hibernate.ejb.packaging.level=ALL
+org.hibernate.ejb.metamodel.AttributeFactory.level=ALL
+org.hibernate.jpa.boot.archive.internal.ArchiveHelper.level=ALL
+org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.level=ALL
+
+#################################################################################
+# Hibernate 4.x
+#################################################################################
+
+# Persistence Context
+#org.hibernate.internal.SessionImpl.level = FINEST
+
+# CRUD
+#org.hibernate.loader.Loader.level = FINEST
+#org.hibernate.event.internal.level = FINEST
+
+#################################################################################
+# Hibernate 3.x
+#################################################################################
+
+# Persistence Context
+#org.hibernate.impl.SessionImpl.level = FINEST
+
+# CRUD
+#org.hibernate.event.def.level = FINEST
