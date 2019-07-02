@@ -33,7 +33,7 @@ public class Locking extends Versioning {
         final ConcurrencyTestData testData = storeCategoriesAndItems();
         Long[] CATEGORIES = testData.categories.identifiers;
 
-        UserTransaction tx = TM.getUserTransaction();
+        UserTransaction tx = TM.getUserTransaction(100000);
         try {
             tx.begin();
             EntityManager em = JPA.createEntityManager();
