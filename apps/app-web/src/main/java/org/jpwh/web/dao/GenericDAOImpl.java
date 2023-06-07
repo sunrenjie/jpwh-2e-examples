@@ -9,7 +9,7 @@ import java.util.List;
 import static javax.persistence.LockModeType.*;
 
 public abstract class GenericDAOImpl<T, ID extends Serializable>
-        implements GenericDAO<T, ID> {
+    implements GenericDAO<T, ID> {
 
     protected final EntityManager em;
     protected final Class<T> entityClass;

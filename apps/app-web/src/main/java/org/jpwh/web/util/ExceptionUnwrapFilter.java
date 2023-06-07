@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * The Servlet spec only unwraps the first level "root" cause in an exception chain.
- *
+ * <p>
  * That is of course completely useless, as dozens of layers these days add their
  * exception to the chain while throwing up. So we unwrap the "deep" real root cause
  * from every exception here, then you can handle it with the error-page directives
@@ -22,7 +22,7 @@ public class ExceptionUnwrapFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-       throws ServletException, IOException {
+        throws ServletException, IOException {
         try {
             chain.doFilter(request, response);
         } catch (ServletException e) {

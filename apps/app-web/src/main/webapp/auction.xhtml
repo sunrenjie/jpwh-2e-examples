@@ -44,31 +44,31 @@
             <h:outputText value="Current Highest Bid:"/>
             <h:form>
                 <h:panelGrid columns="4" columnClasses="horizontalFormField">
-                <h:outputText value="#{auctionService.highestBidAmount}"
-                              rendered="#{not empty auctionService.highestBidAmount}"/>
-                <h:outputText value="-" rendered="#{empty auctionService.highestBidAmount}"/>
-                <!-- DOC:CALLOUT
-                    You need to transmit the identifier value of the item when the
-                    form is submitted. The backend service is request-scoped, so it
-                    needs to be initialized for every request, this will call the
-                    <code>AuctionService#setId()</code> method.
-                -->
-                <h:inputHidden value="#{auctionService.id}"/>
+                    <h:outputText value="#{auctionService.highestBidAmount}"
+                                  rendered="#{not empty auctionService.highestBidAmount}"/>
+                    <h:outputText value="-" rendered="#{empty auctionService.highestBidAmount}"/>
+                    <!-- DOC:CALLOUT
+                        You need to transmit the identifier value of the item when the
+                        form is submitted. The backend service is request-scoped, so it
+                        needs to be initialized for every request, this will call the
+                        <code>AuctionService#setId()</code> method.
+                    -->
+                    <h:inputHidden value="#{auctionService.id}"/>
 
-                <!-- DOC:CALLOUT
-                    The entered bid amount will be set by JSF with the
-                    <code>AuctionService#setNewBidAmount()</code> method when the
-                    POSTback of this form is processed.
-                -->
-                <h:inputText value="#{auctionService.newBidAmount}"
-                             size="6"/>
+                    <!-- DOC:CALLOUT
+                        The entered bid amount will be set by JSF with the
+                        <code>AuctionService#setNewBidAmount()</code> method when the
+                        POSTback of this form is processed.
+                    -->
+                    <h:inputText value="#{auctionService.newBidAmount}"
+                                 size="6"/>
 
-                <!-- DOC:CALLOUT
-                    After all values have been bound, the action method
-                    <code>AuctionService#placeBid()</code> will be called.
-                -->
-                <h:commandButton value="Place Bid"
-                                 action="#{auctionService.placeBid}"/>
+                    <!-- DOC:CALLOUT
+                        After all values have been bound, the action method
+                        <code>AuctionService#placeBid()</code> will be called.
+                    -->
+                    <h:commandButton value="Place Bid"
+                                     action="#{auctionService.placeBid}"/>
                 </h:panelGrid>
             </h:form>
 
@@ -86,7 +86,7 @@
 
         <h:panelGroup layout="block"
                       styleClass="itemDescription">
-                #{auctionService.item.description}
+            #{auctionService.item.description}
         </h:panelGroup>
 
     </ui:define>

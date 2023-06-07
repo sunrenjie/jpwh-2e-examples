@@ -199,7 +199,7 @@ public class BulkStatementsCriteria extends JPATest {
             EntityManager em = JPA.createEntityManager();
 
             List<CreditCard> creditCards =
-               em.createQuery("select c from CreditCard c").getResultList();
+                em.createQuery("select c from CreditCard c").getResultList();
 
             CriteriaDelete<CreditCard> delete =
                 criteriaBuilder.createCriteriaDelete(CreditCard.class);

@@ -29,7 +29,7 @@ public class Typesafe extends QueryingTest {
         TestDataCategoriesItems testData = storeTestData();
 
         CriteriaBuilder cb =
-           JPA.getEntityManagerFactory().getCriteriaBuilder();
+            JPA.getEntityManagerFactory().getCriteriaBuilder();
 
         UserTransaction tx = TM.getUserTransaction();
         try {
@@ -40,9 +40,9 @@ public class Typesafe extends QueryingTest {
                 CriteriaQuery<User> criteria = cb.createQuery(User.class);
                 Root<User> u = criteria.from(User.class);
                 criteria.select(u).where(
-                   cb.equal(
-                      u.get(User_.homeAddress).get(Address_.city),
-                      "Some City"));
+                    cb.equal(
+                        u.get(User_.homeAddress).get(Address_.city),
+                        "Some City"));
 
                 TypedQuery<User> q = em.createQuery(criteria);
                 User user = q.getSingleResult();
@@ -55,8 +55,8 @@ public class Typesafe extends QueryingTest {
                 Root<Item> i = criteria.from(Item.class);
                 Join<Item, Bid> b = i.join(Item_.bids);
                 criteria.select(i).where(
-                   cb.gt(b.get(Bid_.amount), new BigDecimal(100)));
-                   // cb.gt(b.get(Bid_.amount), "100")); // Wouldn't compile!
+                    cb.gt(b.get(Bid_.amount), new BigDecimal(100)));
+                // cb.gt(b.get(Bid_.amount), "100")); // Wouldn't compile!
 
                 TypedQuery<Item> q = em.createQuery(criteria);
                 List<Item> result = q.getResultList();

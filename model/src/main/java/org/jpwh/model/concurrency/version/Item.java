@@ -27,8 +27,8 @@ public class Item implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
-            name = "IMAGE",
-            joinColumns = @JoinColumn(name = "ITEM_ID"))
+        name = "IMAGE",
+        joinColumns = @JoinColumn(name = "ITEM_ID"))
     @Column(name = "FILENAME")
     protected Set<String> images = new HashSet<String>();
 

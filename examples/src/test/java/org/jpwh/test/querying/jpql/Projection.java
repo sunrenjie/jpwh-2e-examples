@@ -41,7 +41,7 @@ public class Projection extends QueryingTest {
                     items.add((Item) row[0]);
 
                     assertTrue(row[1] instanceof Bid);
-                    bids.add((Bid)row[1]);
+                    bids.add((Bid) row[1]);
                 }
 
                 assertEquals(items.size(), 3);
@@ -62,10 +62,10 @@ public class Projection extends QueryingTest {
                     ids.add((Long) row[0]);
 
                     assertTrue(row[1] instanceof String);
-                    names.add((String)row[1]);
+                    names.add((String) row[1]);
 
                     assertTrue(row[2] == null || row[2] instanceof BigDecimal);
-                    prices.add((BigDecimal)row[2]);
+                    prices.add((BigDecimal) row[2]);
                 }
                 assertEquals(ids.size(), 3, "ids");
                 assertEquals(names.size(), 3, "names");
@@ -124,28 +124,28 @@ public class Projection extends QueryingTest {
             em.clear();
             {
                 Query query = em.createNamedQuery("count");
-                Long count = (Long)query.getSingleResult();
+                Long count = (Long) query.getSingleResult();
                 assertEquals(count, new Long(3));
             }
             em.clear();
             {
                 Query q = em.createNamedQuery("countDistinct");
-                Long count = (Long)q.getSingleResult();
+                Long count = (Long) q.getSingleResult();
                 assertEquals(count, new Long(3));
             }
             em.clear();
             {
                 Query q = em.createNamedQuery("sum");
-                BigDecimal sum = (BigDecimal)q.getSingleResult();
+                BigDecimal sum = (BigDecimal) q.getSingleResult();
                 assertEquals(sum.toString(), "304.99");
             }
             em.clear();
             {
                 Query q = em.createNamedQuery("minMax");
                 q.setParameter("itemId", testData.items.getFirstId());
-                Object[] result = (Object[])q.getSingleResult();
-                assertEquals(((BigDecimal)result[0]).compareTo(new BigDecimal("99")), 0);
-                assertEquals(((BigDecimal)result[1]).compareTo(new BigDecimal("101")), 0);
+                Object[] result = (Object[]) q.getSingleResult();
+                assertEquals(((BigDecimal) result[0]).compareTo(new BigDecimal("99")), 0);
+                assertEquals(((BigDecimal) result[1]).compareTo(new BigDecimal("101")), 0);
             }
             em.clear();
 
@@ -170,8 +170,8 @@ public class Projection extends QueryingTest {
                 "dateDiffProjection",
                 em.createQuery(
                     "select i.name, " +
-                    "function('DATEDIFF', 'DAY', i.createdOn, i.auctionEnd) " +
-                    "from Item i"
+                        "function('DATEDIFF', 'DAY', i.createdOn, i.auctionEnd) " +
+                        "from Item i"
                 )
             );
 

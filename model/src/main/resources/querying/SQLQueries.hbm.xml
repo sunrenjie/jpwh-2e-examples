@@ -10,29 +10,29 @@
         <return-scalar column="PATH"/>
         <return-scalar column="LEVEL" type="integer"/>
         with CATEGORY_LINK(ID, NAME, PARENT_ID, PATH, LEVEL) as (
-            select
-                ID,
-                NAME,
-                PARENT_ID,
-                '/' || NAME,
-                0
-            from CATEGORY where PARENT_ID is null
-            union all
-            select
-                c.ID,
-                c.NAME,
-                c.PARENT_ID,
-                cl.PATH || '/' || c.NAME,
-                cl.LEVEL + 1
-            from CATEGORY_LINK cl
-            join CATEGORY c on cl.ID = c.PARENT_ID
+        select
+        ID,
+        NAME,
+        PARENT_ID,
+        '/' || NAME,
+        0
+        from CATEGORY where PARENT_ID is null
+        union all
+        select
+        c.ID,
+        c.NAME,
+        c.PARENT_ID,
+        cl.PATH || '/' || c.NAME,
+        cl.LEVEL + 1
+        from CATEGORY_LINK cl
+        join CATEGORY c on cl.ID = c.PARENT_ID
         )
         select
-            ID,
-            NAME as CAT_NAME,
-            PARENT_ID,
-            PATH,
-            LEVEL
+        ID,
+        NAME as CAT_NAME,
+        PARENT_ID,
+        PATH,
+        LEVEL
         from CATEGORY_LINK
         order by ID
     </sql-query>

@@ -207,7 +207,7 @@ public class EditItemService implements Serializable {
     // A nice trick with CDI: This bean will answer if the lookup event is fired by
     // someone, but it won't be created if it doesn't exist already.
     public void getConversationalImage(@Observes(notifyObserver = IF_EXISTS)
-                                       ImageLookup imageLookup) {
+                                           ImageLookup imageLookup) {
         // We might have transient images without identifier value, so we assume
         // the lookup identifier is actually the index of an image in our list of images
         Image image = getItem().getImagesSorted().get(

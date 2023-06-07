@@ -20,7 +20,7 @@ public abstract class BillingDetails {
     protected Long id;
 
     @NotNull
-    @ManyToOne(fetch =  FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     protected User user;
 
     @NotNull

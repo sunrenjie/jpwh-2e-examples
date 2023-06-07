@@ -33,7 +33,7 @@ public class Base64Converter implements Converter {
     public String getString(Object value) {
         if (!(value instanceof Serializable))
             throw new ConverterException(new FacesMessage(
-                    "Must be java.io.Serializable: " + value
+                "Must be java.io.Serializable: " + value
             ));
         try (ByteArrayOutputStream bo = new ByteArrayOutputStream();
              ObjectOutputStream so = new ObjectOutputStream(MimeUtility.encode(bo, "base64"))) {

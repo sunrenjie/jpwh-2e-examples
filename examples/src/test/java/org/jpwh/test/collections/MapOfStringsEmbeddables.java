@@ -32,13 +32,13 @@ public class MapOfStringsEmbeddables extends JPATest {
             Item someItem = new Item();
 
             someItem.getImages().put("foo.jpg",
-                    new Image("Foo", 640, 480));
+                new Image("Foo", 640, 480));
             someItem.getImages().put("bar.jpg",
-                    new Image(null, 800, 600));
+                new Image(null, 800, 600));
             someItem.getImages().put("baz.jpg",
-                    new Image("Baz", 1024, 768));
+                new Image("Baz", 1024, 768));
             someItem.getImages().put("baz.jpg",
-                    new Image("Baz", 1024, 768)); // Duplicate key filtered!
+                new Image("Baz", 1024, 768)); // Duplicate key filtered!
 
             em.persist(someItem);
             tx.commit();

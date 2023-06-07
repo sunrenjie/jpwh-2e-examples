@@ -50,7 +50,7 @@ public class OneToManyList extends JPATest {
             em = JPA.createEntityManager();
 
             Item item = em.find(Item.class, ITEM_ID);
-            List<Bid> bids =  item.getBids();
+            List<Bid> bids = item.getBids();
             assertEquals(bids.size(), 2);
             assertEquals(bids.get(0).getAmount().compareTo(new BigDecimal("123")), 0);
             assertEquals(bids.get(1).getAmount().compareTo(new BigDecimal("456")), 0);

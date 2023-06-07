@@ -2,7 +2,7 @@ package org.jpwh.model.filtering.callback;
 
 import javax.persistence.PostPersist;
 
-/** 
+/**
  * An entity listener class must have either no constructor or a public no-argument
  * constructor. It doesn't have to implement any special interfaces. An entity listener
  * is stateless; the JPA engine automatically creates and destroys it.

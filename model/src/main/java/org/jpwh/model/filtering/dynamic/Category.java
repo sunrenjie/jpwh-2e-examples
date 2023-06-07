@@ -25,8 +25,8 @@ public class Category {
         name = "limitByUserRank",
         condition =
             ":currentUserRank >= (" +
-                    "select u.RANK from USERS u " +
-                    "where u.ID = SELLER_ID" +
+                "select u.RANK from USERS u " +
+                "where u.ID = SELLER_ID" +
                 ")"
     )
     protected Set<Item> items = new HashSet<Item>();

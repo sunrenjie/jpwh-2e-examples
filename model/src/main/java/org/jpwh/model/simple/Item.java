@@ -103,7 +103,7 @@ public class Item {
 
     public Bid placeBid(Bid currentHighestBid, BigDecimal bidAmount) {
         if (currentHighestBid == null ||
-                bidAmount.compareTo(currentHighestBid.getAmount()) > 0) {
+            bidAmount.compareTo(currentHighestBid.getAmount()) > 0) {
             return new Bid(bidAmount, this);
         }
         return null;

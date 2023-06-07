@@ -89,7 +89,7 @@ public class Joins extends QueryingTest {
                 boolean haveBids = false;
                 for (Item item : distinctResult) {
                     em.detach(item); // No more lazy loading!
-                    if(item.getBids().size() > 0) {
+                    if (item.getBids().size() > 0) {
                         haveBids = true;
                         break;
                     }
@@ -104,7 +104,7 @@ public class Joins extends QueryingTest {
                 boolean haveBids = false;
                 for (Item item : result) {
                     em.detach(item); // No more lazy loading!
-                    if(item.getBids().size() > 0) {
+                    if (item.getBids().size() > 0) {
                         haveBids = true;
                         break;
                     }
@@ -121,7 +121,7 @@ public class Joins extends QueryingTest {
                 boolean haveSeller = false;
                 for (Item item : result) {
                     em.detach(item); // No more lazy loading!
-                    if(item.getBids().size() > 0) {
+                    if (item.getBids().size() > 0) {
                         haveBids = true;
                         Bid bid = item.getBids().iterator().next();
                         if (bid.getBidder() != null && bid.getBidder().getUsername() != null) {
@@ -145,9 +145,9 @@ public class Joins extends QueryingTest {
                 boolean haveImages = false;
                 for (Item item : result) {
                     em.detach(item); // No more lazy loading!
-                    if(item.getBids().size() > 0)
+                    if (item.getBids().size() > 0)
                         haveBids = true;
-                    if(item.getImages().size() > 0)
+                    if (item.getImages().size() > 0)
                         haveImages = true;
                 }
                 assertTrue(haveBids);

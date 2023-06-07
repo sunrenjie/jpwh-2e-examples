@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 
 @Embeddable
 @AttributeOverrides({
-        @AttributeOverride(name = "name",
-                column = @Column(name = "DIMENSIONS_NAME")),
-        @AttributeOverride(name = "symbol",
-                column = @Column(name = "DIMENSIONS_SYMBOL"))
+    @AttributeOverride(name = "name",
+        column = @Column(name = "DIMENSIONS_NAME")),
+    @AttributeOverride(name = "symbol",
+        column = @Column(name = "DIMENSIONS_SYMBOL"))
 })
 public class Dimensions extends Measurement {
 

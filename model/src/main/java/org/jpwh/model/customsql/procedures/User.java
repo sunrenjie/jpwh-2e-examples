@@ -45,7 +45,7 @@ public class User {
     @NotNull
     protected String username;
 
-    protected boolean activated  = true;
+    protected boolean activated = true;
 
     public User() {
     }

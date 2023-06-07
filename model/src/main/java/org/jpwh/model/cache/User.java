@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Cacheable
 @org.hibernate.annotations.Cache(
     usage = org.hibernate.annotations
-             .CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+        .CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
     region = "org.jpwh.model.cache.User" // Default name
 )
 @org.hibernate.annotations.NaturalIdCache

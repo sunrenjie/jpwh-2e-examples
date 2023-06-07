@@ -47,7 +47,7 @@ public class CompositeKeyManyToOne extends JPATest {
                 User user = em.find(User.class, id);
                 assertEquals(user.getId().getDepartmentNr(), "123");
 
-                Item item = (Item)em.createQuery(
+                Item item = (Item) em.createQuery(
                     "select i from Item i where i.seller = :u"
                 ).setParameter("u", user).getSingleResult();
 

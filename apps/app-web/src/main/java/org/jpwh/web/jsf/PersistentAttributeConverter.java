@@ -31,7 +31,7 @@ public class PersistentAttributeConverter implements Converter {
             return getString((SingularAttribute) value);
         } else {
             throw new ConverterException(new FacesMessage(
-                    "Not a JPA metamodel SingularAttribute: " + value
+                "Not a JPA metamodel SingularAttribute: " + value
             ));
         }
     }
@@ -43,7 +43,7 @@ public class PersistentAttributeConverter implements Converter {
     public SingularAttribute getAttribute(String value) {
         // TODO: This only supports 'Item_.name', not 'User_.address.city.zipCode'
         String entityName = value.substring(0, value.lastIndexOf("."));
-        String attributeName = value.substring(entityName.length()+1);
+        String attributeName = value.substring(entityName.length() + 1);
 
         SingularAttribute attribute = null;
         for (EntityType<?> entityType : emf.getMetamodel().getEntities()) {
@@ -52,7 +52,7 @@ public class PersistentAttributeConverter implements Converter {
                     attribute = entityType.getSingularAttribute(attributeName);
                 } catch (IllegalArgumentException ex) {
                     throw new ConverterException(new FacesMessage(
-                            "Persistent entity '" + entityName + "' does not have attribute: " + attributeName
+                        "Persistent entity '" + entityName + "' does not have attribute: " + attributeName
                     ));
                 }
             }
@@ -60,7 +60,7 @@ public class PersistentAttributeConverter implements Converter {
 
         if (attribute == null)
             throw new ConverterException(new FacesMessage(
-                    "Persistent attribute not found: " + value
+                "Persistent attribute not found: " + value
             ));
 
         return attribute;
@@ -74,7 +74,7 @@ public class PersistentAttributeConverter implements Converter {
             // TODO: Support other managed types
         } else {
             throw new ConverterException(new FacesMessage(
-                    "Not a JPA metamodel EntityType: " + declaringType
+                "Not a JPA metamodel EntityType: " + declaringType
             ));
         }
     }

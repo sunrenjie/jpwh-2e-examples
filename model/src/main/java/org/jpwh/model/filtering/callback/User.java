@@ -41,7 +41,7 @@ public class User {
     }
 
     @PostPersist
-    public void notifyAdmin(){
+    public void notifyAdmin() {
         User currentUser = CurrentUser.INSTANCE.get();
         Mail mail = Mail.INSTANCE;
         mail.send(

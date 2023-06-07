@@ -43,8 +43,8 @@ public class MapOfStringsOrderBy extends JPATest {
             assertEquals(item.getImages().size(), 3);
 
             // Iteration order as retrieved from database with ORDER BY clause
-            Iterator<Map.Entry<String,String>> it = item.getImages().entrySet().iterator();
-            Map.Entry<String,String> entry;
+            Iterator<Map.Entry<String, String>> it = item.getImages().entrySet().iterator();
+            Map.Entry<String, String> entry;
             entry = it.next();
             assertEquals(entry.getKey(), "foo.jpg");
             assertEquals(entry.getValue(), "Foo");

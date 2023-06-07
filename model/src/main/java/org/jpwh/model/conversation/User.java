@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "USERS",
-       uniqueConstraints =
-        @UniqueConstraint(columnNames = "USERNAME"))
+    uniqueConstraints =
+    @UniqueConstraint(columnNames = "USERNAME"))
 public class User {
 
     @Id

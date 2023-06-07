@@ -10,10 +10,10 @@
     ,
     @org.hibernate.annotations.FilterDef(
         name = "limitByUserRankDefault",
-        defaultCondition=
+        defaultCondition =
             ":currentUserRank >= (" +
-                    "select u.RANK from USERS u " +
-                    "where u.ID = SELLER_ID" +
+                "select u.RANK from USERS u " +
+                "where u.ID = SELLER_ID" +
                 ")",
         parameters = {
             @org.hibernate.annotations.ParamDef(

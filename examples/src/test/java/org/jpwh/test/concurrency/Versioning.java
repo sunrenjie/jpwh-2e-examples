@@ -298,7 +298,7 @@ public class Versioning extends JPATest {
         EntityManager em = JPA.createEntityManager();
         ConcurrencyTestData testData = new ConcurrencyTestData();
         testData.categories = new TestData(new Long[3]);
-        testData.items= new TestData(new Long[5]);
+        testData.items = new TestData(new Long[5]);
         for (int i = 1; i <= testData.categories.identifiers.length; i++) {
             Category category = new Category();
             category.setName("Category: " + i);

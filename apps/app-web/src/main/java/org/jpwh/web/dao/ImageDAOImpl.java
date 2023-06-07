@@ -17,7 +17,7 @@ public class ImageDAOImpl extends GenericDAOImpl<Image, Long> implements ImageDA
 
     @Override
     public Image hydrateImage(InputStream inputStream) throws Exception {
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024*1024)) {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024 * 1024)) {
             StreamUtils.copy(inputStream, outputStream);
             Image image = new Image();
             image.setData(outputStream.toByteArray());

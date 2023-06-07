@@ -25,6 +25,6 @@ public class Serialization {
     }
 
     static public <T> T copy(T o) {
-        return (T)deserialize(serialize(o));
+        return (T) deserialize(serialize(o));
     }
 }

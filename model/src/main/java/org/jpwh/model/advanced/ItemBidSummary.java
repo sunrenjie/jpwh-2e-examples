@@ -7,9 +7,9 @@ import javax.persistence.Id;
 @org.hibernate.annotations.Immutable
 @org.hibernate.annotations.Subselect(
     value = "select i.ID as ITEMID, i.ITEM_NAME as NAME, " +
-            "count(b.ID) as NUMBEROFBIDS " +
-            "from ITEM i left outer join BID b on i.ID = b.ITEM_ID " +
-            "group by i.ID, i.ITEM_NAME"
+        "count(b.ID) as NUMBEROFBIDS " +
+        "from ITEM i left outer join BID b on i.ID = b.ITEM_ID " +
+        "group by i.ID, i.ITEM_NAME"
 )
 
 // TODO Table names are case sensitive, Hibernate bug HHH-8430

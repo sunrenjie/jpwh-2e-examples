@@ -29,13 +29,13 @@ public class Item {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @org.hibernate.annotations.Fetch(
-       org.hibernate.annotations.FetchMode.SELECT // Defaults to JOIN
+        org.hibernate.annotations.FetchMode.SELECT // Defaults to JOIN
     )
     protected User seller;
 
     @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
     @org.hibernate.annotations.Fetch(
-       org.hibernate.annotations.FetchMode.SELECT // Defaults to JOIN
+        org.hibernate.annotations.FetchMode.SELECT // Defaults to JOIN
     )
     protected Set<Bid> bids = new HashSet<>();
 

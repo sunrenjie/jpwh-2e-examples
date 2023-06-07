@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 
 @Embeddable
 @AttributeOverrides({
-        @AttributeOverride(name = "name",
-                column = @Column(name = "WEIGHT_NAME")),
-        @AttributeOverride(name = "symbol",
-                column = @Column(name = "WEIGHT_SYMBOL"))
+    @AttributeOverride(name = "name",
+        column = @Column(name = "WEIGHT_NAME")),
+    @AttributeOverride(name = "symbol",
+        column = @Column(name = "WEIGHT_SYMBOL"))
 })
 public class Weight extends Measurement {
 

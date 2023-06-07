@@ -112,7 +112,7 @@ public class BulkStatementsJPQL extends JPATest {
             assertFalse(someItem.isActive());
 
             Query query = em.createQuery(
-               "update Item i set i.active = true where i.seller = :s"
+                "update Item i set i.active = true where i.seller = :s"
             ).setParameter("s", johndoe);
 
             int updatedEntities = query.executeUpdate();
@@ -143,14 +143,14 @@ public class BulkStatementsJPQL extends JPATest {
 
             // Hibernate even creates a temporary table for this update
             Query query = em.createQuery(
-               "update CreditCard c set c.stolenOn = :now where c.owner like 'J%'"
+                "update CreditCard c set c.stolenOn = :now where c.owner like 'J%'"
             ).setParameter("now", new Date());
 
             int updatedEntities = query.executeUpdate();
             assertEquals(updatedEntities, 1);
 
             List<CreditCard> creditCards =
-               em.createQuery("select c from CreditCard c").getResultList();
+                em.createQuery("select c from CreditCard c").getResultList();
 
             assertEquals(creditCards.size(), 1);
             for (CreditCard creditCard : creditCards) {
@@ -180,8 +180,8 @@ public class BulkStatementsJPQL extends JPATest {
             int originalVersion = someItem.getVersion();
 
             int updatedEntities =
-               em.createQuery("update versioned Item i set i.active = true")
-                  .executeUpdate();
+                em.createQuery("update versioned Item i set i.active = true")
+                    .executeUpdate();
 
             assertEquals(updatedEntities, 3);
 
@@ -205,10 +205,10 @@ public class BulkStatementsJPQL extends JPATest {
             EntityManager em = JPA.createEntityManager();
 
             List<CreditCard> creditCards =
-               em.createQuery("select c from CreditCard c").getResultList();
+                em.createQuery("select c from CreditCard c").getResultList();
 
             em.createQuery("delete CreditCard c where c.owner like 'J%'")
-               .executeUpdate();
+                .executeUpdate();
 
             for (CreditCard creditCard : creditCards) {
                 em.refresh(creditCard); // Throws EntityNotFoundException
@@ -232,16 +232,16 @@ public class BulkStatementsJPQL extends JPATest {
 
             int createdRecords =
                 em.createQuery(
-                   "insert into" +
-                      " StolenCreditCard(id, owner, cardNumber, expMonth, expYear, userId, username)" +
-                      " select c.id, c.owner, c.cardNumber, c.expMonth, c.expYear, u.id, u.username" +
-                      " from CreditCard c join c.user u where c.owner like 'J%'"
+                    "insert into" +
+                        " StolenCreditCard(id, owner, cardNumber, expMonth, expYear, userId, username)" +
+                        " select c.id, c.owner, c.cardNumber, c.expMonth, c.expYear, u.id, u.username" +
+                        " from CreditCard c join c.user u where c.owner like 'J%'"
                 ).executeUpdate();
 
             assertEquals(createdRecords, 1);
 
             List<StolenCreditCard> stolenCreditCards =
-               em.createQuery("select sc from StolenCreditCard sc").getResultList();
+                em.createQuery("select sc from StolenCreditCard sc").getResultList();
             assertEquals(stolenCreditCards.size(), 1);
 
             tx.commit();

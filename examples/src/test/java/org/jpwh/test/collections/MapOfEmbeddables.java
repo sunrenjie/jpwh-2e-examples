@@ -49,12 +49,12 @@ public class MapOfEmbeddables extends JPATest {
             em = JPA.createEntityManager();
             Item item = em.find(Item.class, ITEM_ID);
             assertEquals(item.getImages().size(), 3);
-            assertEquals(item.getImages().get(new Filename("foo","jpg")).getTitle(), "Foo");
+            assertEquals(item.getImages().get(new Filename("foo", "jpg")).getTitle(), "Foo");
             assertEquals(item.getImages().get(new Filename("bar", "jpg")).getTitle(), null);
             assertEquals(item.getImages().get(new Filename("baz", "jpg")), new Image("Baz", 1024, 768));
 
             // Remove one
-            item.getImages().remove(new Filename("foo","jpg"));
+            item.getImages().remove(new Filename("foo", "jpg"));
             tx.commit();
             em.close();
 

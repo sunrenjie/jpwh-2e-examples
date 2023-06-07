@@ -44,9 +44,9 @@ public class OneToManyCascadeRemove extends JPATest {
             tx.begin();
             em = JPA.createEntityManager();
             Collection<Bid> bids =
-               em.createQuery("select b from Bid b where b.item.id = :itemId")
-                  .setParameter("itemId", ITEM_ID)
-                  .getResultList();
+                em.createQuery("select b from Bid b where b.item.id = :itemId")
+                    .setParameter("itemId", ITEM_ID)
+                    .getResultList();
             assertEquals(bids.size(), 2);
             tx.commit();
             em.close();
@@ -63,8 +63,8 @@ public class OneToManyCascadeRemove extends JPATest {
             tx.begin();
             em = JPA.createEntityManager();
             bids = em.createQuery("select b from Bid b where b.item.id = :itemId")
-               .setParameter("itemId", ITEM_ID)
-               .getResultList();
+                .setParameter("itemId", ITEM_ID)
+                .getResultList();
             assertEquals(bids.size(), 0); // Bids are gone
             tx.commit();
             em.close();

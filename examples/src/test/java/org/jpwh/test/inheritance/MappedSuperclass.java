@@ -16,14 +16,14 @@ public class MappedSuperclass extends InheritanceCRUD {
     @Override
     protected Object createBankAccount() {
         return new BankAccount(
-                "Jane Roe", "445566", "One Percent Bank Inc.", "999"
+            "Jane Roe", "445566", "One Percent Bank Inc.", "999"
         );
     }
 
     @Override
     protected Object createCreditCard() {
         return new CreditCard(
-                "John Doe", "1234123412341234", "06", "2015"
+            "John Doe", "1234123412341234", "06", "2015"
         );
     }
 
@@ -38,14 +38,14 @@ public class MappedSuperclass extends InheritanceCRUD {
     public void jdbcSqlQueryBankAccount() throws Exception {
         storeLoadBillingDetails();
         doJdbcSqlQuery("inheritance/mappedsuperclass/BankAccount.sql.txt",
-                true, new String[]{"\\d*", "Jane Roe", "445566", "One Percent Bank Inc.", "999"});
+            true, new String[]{"\\d*", "Jane Roe", "445566", "One Percent Bank Inc.", "999"});
     }
 
     @Test
     public void jdbcSqlQueryCreditCard() throws Exception {
         storeLoadBillingDetails();
         doJdbcSqlQuery("inheritance/mappedsuperclass/CreditCard.sql.txt",
-                true, new String[]{"\\d*", "John Doe", "1234123412341234", "06", "2015"});
+            true, new String[]{"\\d*", "John Doe", "1234123412341234", "06", "2015"});
     }
 
     @Test

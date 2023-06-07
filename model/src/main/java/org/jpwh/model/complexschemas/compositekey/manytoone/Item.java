@@ -19,9 +19,9 @@ public class Item {
     @ManyToOne
     @JoinColumns({
         @JoinColumn(name = "SELLER_USERNAME",
-                    referencedColumnName = "USERNAME"),
+            referencedColumnName = "USERNAME"),
         @JoinColumn(name = "SELLER_DEPARTMENTNR",
-                    referencedColumnName = "DEPARTMENTNR")
+            referencedColumnName = "DEPARTMENTNR")
     })
     protected User seller;
 

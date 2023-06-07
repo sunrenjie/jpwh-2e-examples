@@ -8,7 +8,7 @@ public class ValidationMessages {
 
     public static void addFacesMessage(String key) {
         FacesContext.getCurrentInstance().addMessage(null,
-           new FacesMessage(ValidationMessages.get(key)));
+            new FacesMessage(ValidationMessages.get(key)));
     }
 
     public static String get(String key) {

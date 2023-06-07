@@ -103,7 +103,7 @@ public class DynamicFilter extends JPATest {
                 em.clear();
 
                 filter.setParameter("currentUserRank", 100);
-                List<Item >items =
+                List<Item> items =
                     em.createQuery("select i from Item i")
                         .getResultList();
                 assertEquals(items.size(), 3);

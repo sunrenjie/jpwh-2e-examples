@@ -18,13 +18,13 @@ import javax.validation.constraints.NotNull;
 @NamedNativeQueries({
     @NamedNativeQuery(
         name = "findUserById",
-        /* 
+        /*
            The query must have exactly one parameter placeholder, which Hibernate will
            set as the identifier value of the instance to load. Here, we have a positional
            parameter, but a named parameter would also work.
          */
         query = "select * from USERS where ID = ?",
-        /* 
+        /*
            For this trivial query, you don't need a custom result set mapping.
            The <code>User</code> class already maps all fields returned by the query.
            Hibernate can automatically transform the result.
@@ -43,13 +43,13 @@ import javax.validation.constraints.NotNull;
 )
 @org.hibernate.annotations.SQLInsert(
     sql = "insert into USERS " +
-          "(ACTIVATED, USERNAME, ID) values (?, ?, ?)"
+        "(ACTIVATED, USERNAME, ID) values (?, ?, ?)"
 )
 @org.hibernate.annotations.SQLUpdate(
     sql = "update USERS set " +
-          "ACTIVATED = ?, " +
-          "USERNAME = ? " +
-          "where ID = ?"
+        "ACTIVATED = ?, " +
+        "USERNAME = ? " +
+        "where ID = ?"
 )
 @org.hibernate.annotations.SQLDelete(
     sql = "delete from USERS where ID = ?"
@@ -65,7 +65,7 @@ public class User {
     @NotNull
     protected String username;
 
-    protected boolean activated  = true;
+    protected boolean activated = true;
 
     public User() {
     }

@@ -21,8 +21,8 @@ public class Item {
 
     @ElementCollection
     @CollectionTable(
-            name = "IMAGE", // Defaults to ITEM_IMAGES
-            joinColumns = @JoinColumn(name = "ITEM_ID")) // Default, actually
+        name = "IMAGE", // Defaults to ITEM_IMAGES
+        joinColumns = @JoinColumn(name = "ITEM_ID")) // Default, actually
     @Column(name = "FILENAME") // Defaults to IMAGES
     protected Set<String> images = new HashSet<String>(); // Initialize field here
 

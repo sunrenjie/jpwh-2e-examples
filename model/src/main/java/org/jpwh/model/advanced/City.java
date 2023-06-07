@@ -12,11 +12,11 @@ public class City {
     protected String zipcode;
 
     @NotNull
-    @Column(nullable =  false)
+    @Column(nullable = false)
     protected String name;
 
     @NotNull
-    @Column(nullable =  false)
+    @Column(nullable = false)
     protected String country;
 
     public String getZipcode() {

@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "USERS")
-public class User implements Serializable{
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(generator = Constants.ID_GENERATOR)

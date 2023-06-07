@@ -19,7 +19,8 @@
         <h:link>
             <h:outputText value="#{cc.attrs.label}"
                           style="#{persistentAttributeConverter.equals(cc.attrs.page.sortAttribute, cc.attrs.attribute) ? 'border-bottom: 0.1em solid;' : ''}"/>
-            <h:panelGroup rendered="#{persistentAttributeConverter.equals(cc.attrs.page.sortAttribute, cc.attrs.attribute)}"
+            <h:panelGroup
+                    rendered="#{persistentAttributeConverter.equals(cc.attrs.page.sortAttribute, cc.attrs.attribute)}"
                     style="display: inline-block; padding: 0 0.5em; font-size: 80%; font-weight: bold;">
                 <h:outputText value="&#x2191;" rendered="#{cc.attrs.page.sortedAscending}"/>
                 <h:outputText value="&#x2193;" rendered="#{not cc.attrs.page.sortedAscending}"/>

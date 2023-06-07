@@ -44,17 +44,16 @@ public class Item {
     protected Set<Bid> bids = new HashSet<>();
 
 
-
     @ElementCollection
     @org.hibernate.annotations.Loader(namedQuery = "loadImagesForItem")
     @org.hibernate.annotations.SQLInsert(
         sql = "insert into ITEM_IMAGES " +
-              "(ITEM_ID, FILENAME, HEIGHT, WIDTH) " +
-              "values (?, ?, ?, ?)"
+            "(ITEM_ID, FILENAME, HEIGHT, WIDTH) " +
+            "values (?, ?, ?, ?)"
     )
     @org.hibernate.annotations.SQLDelete(
         sql = "delete from ITEM_IMAGES " +
-              "where ITEM_ID = ? and FILENAME = ? and HEIGHT = ? and WIDTH = ?"
+            "where ITEM_ID = ? and FILENAME = ? and HEIGHT = ? and WIDTH = ?"
     )
     @org.hibernate.annotations.SQLDeleteAll(
         sql = "delete from ITEM_IMAGES where ITEM_ID = ?"

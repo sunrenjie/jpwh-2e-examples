@@ -17,8 +17,7 @@ public class HelloWorldJPA extends TransactionManagerTest {
     @Test
     public void storeLoadMessage() throws Exception {
 
-        EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory("HelloWorldPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HelloWorldPU");
 
         try {
             {

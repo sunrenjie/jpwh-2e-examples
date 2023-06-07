@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @DiscriminatorValue("CC")
 @SecondaryTable(
-        name = "CREDITCARD",
-        pkJoinColumns = @PrimaryKeyJoinColumn(name = "CREDITCARD_ID")
+    name = "CREDITCARD",
+    pkJoinColumns = @PrimaryKeyJoinColumn(name = "CREDITCARD_ID")
 )
 public class CreditCard extends BillingDetails {
 

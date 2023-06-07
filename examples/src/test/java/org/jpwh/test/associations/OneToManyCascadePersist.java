@@ -60,8 +60,8 @@ public class OneToManyCascadePersist extends JPATest {
             tx.begin();
             em = JPA.createEntityManager();
             Collection<Bid> bids = em.createQuery("select b from Bid b where b.item.id = :itemId")
-               .setParameter("itemId", ITEM_ID)
-               .getResultList();
+                .setParameter("itemId", ITEM_ID)
+                .getResultList();
             assertEquals(bids.size(), 0); // Bids are gone
             tx.commit();
             em.close();

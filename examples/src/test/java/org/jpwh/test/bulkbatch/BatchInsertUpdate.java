@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
 import java.util.Date;
+
 import org.jboss.logging.Logger;
 
 import static org.testng.Assert.assertEquals;
@@ -44,7 +45,7 @@ public class BatchInsertUpdate extends JPATest {
                 for (int i = 0; i < ONE_HUNDRED_THOUSAND; i++) {
                     Item item = new Item(
                         // ...
-                       "Item " + i, CalendarUtil.TOMORROW.getTime(), johndoe
+                        "Item " + i, CalendarUtil.TOMORROW.getTime(), johndoe
                     );
                     em.persist(item);
 
@@ -64,15 +65,15 @@ public class BatchInsertUpdate extends JPATest {
                 em.close();
 
                 long endTime = new Date().getTime();
-                log.info("### Batch insert time in seconds: " + ((endTime-startTime)/1000));
+                log.info("### Batch insert time in seconds: " + ((endTime - startTime) / 1000));
             }
             {
                 // Check if all items have been inserted
                 tx.begin();
                 EntityManager em = JPA.createEntityManager();
                 assertEquals(
-                   em.createQuery("select count(i) from Item i").getSingleResult(),
-                   ONE_HUNDRED_THOUSAND
+                    em.createQuery("select count(i) from Item i").getSingleResult(),
+                    ONE_HUNDRED_THOUSAND
                 );
                 tx.commit();
                 em.close();
@@ -89,9 +90,9 @@ public class BatchInsertUpdate extends JPATest {
                    into application memory, you open an online database cursor.
                  */
                 org.hibernate.ScrollableResults itemCursor =
-                   em.unwrap(org.hibernate.Session.class)
-                       .createQuery("select i from Item i")
-                       .scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
+                    em.unwrap(org.hibernate.Session.class)
+                        .createQuery("select i from Item i")
+                        .scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
 
                 int count = 0;
                 /* 
@@ -129,8 +130,8 @@ public class BatchInsertUpdate extends JPATest {
                 tx.begin();
                 EntityManager em = JPA.createEntityManager();
                 assertEquals(
-                   em.createQuery("select count(i) from Item i where i.active = false").getSingleResult(),
-                   0l
+                    em.createQuery("select count(i) from Item i where i.active = false").getSingleResult(),
+                    0l
                 );
                 tx.commit();
                 em.close();
@@ -152,14 +153,14 @@ public class BatchInsertUpdate extends JPATest {
                 tx.begin();
                 org.hibernate.SessionFactory sf =
                     JPA.getEntityManagerFactory().unwrap(org.hibernate.SessionFactory.class);
-                org.hibernate.StatelessSession statelessSession = sf .openStatelessSession();
+                org.hibernate.StatelessSession statelessSession = sf.openStatelessSession();
 
                 User johndoe = new User("johndoe");
                 statelessSession.insert(johndoe);
 
                 for (int i = 0; i < ONE_HUNDRED_THOUSAND; i++) {
                     Item item = new Item(
-                       "Item " + i, CalendarUtil.TOMORROW.getTime(), johndoe
+                        "Item " + i, CalendarUtil.TOMORROW.getTime(), johndoe
                     );
 
                     statelessSession.insert(item);
@@ -172,10 +173,10 @@ public class BatchInsertUpdate extends JPATest {
                 tx.begin();
                 org.hibernate.SessionFactory sf =
                     JPA.getEntityManagerFactory().unwrap(org.hibernate.SessionFactory.class);
-                org.hibernate.StatelessSession statelessSession = sf .openStatelessSession();
+                org.hibernate.StatelessSession statelessSession = sf.openStatelessSession();
 
                 // TODO I should be seeing this issue but it works: https://hibernate.atlassian.net/browse/HHH-4042
-                long count = (Long)statelessSession.createQuery("select count(i) from Item i").uniqueResult();
+                long count = (Long) statelessSession.createQuery("select count(i) from Item i").uniqueResult();
                 assertEquals(count, ONE_HUNDRED_THOUSAND);
 
                 tx.commit();
@@ -194,7 +195,7 @@ public class BatchInsertUpdate extends JPATest {
                  */
                 org.hibernate.SessionFactory sf =
                     JPA.getEntityManagerFactory().unwrap(org.hibernate.SessionFactory.class);
-                org.hibernate.StatelessSession statelessSession = sf .openStatelessSession();
+                org.hibernate.StatelessSession statelessSession = sf.openStatelessSession();
 
                 /* 
                    You use a JPQL query to load all <code>Item</code> instances from the
@@ -204,7 +205,7 @@ public class BatchInsertUpdate extends JPATest {
                 org.hibernate.ScrollableResults itemCursor =
                     statelessSession
                         .createQuery("select i from Item i")
-                       .scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
+                        .scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
 
                 /* 
                    You scroll through the result with the cursor and retrieve an <code>Item</code>
@@ -235,8 +236,8 @@ public class BatchInsertUpdate extends JPATest {
                 tx.begin();
                 EntityManager em = JPA.createEntityManager();
                 assertEquals(
-                   em.createQuery("select count(i) from Item i where i.active = false").getSingleResult(),
-                   0l
+                    em.createQuery("select count(i) from Item i where i.active = false").getSingleResult(),
+                    0l
                 );
                 tx.commit();
                 em.close();
@@ -246,6 +247,7 @@ public class BatchInsertUpdate extends JPATest {
             TM.rollback();
         }
     }
+
     protected void modifyItem(Item item) {
         item.setActive(true); // Well, this is trivial but you get the idea
     }

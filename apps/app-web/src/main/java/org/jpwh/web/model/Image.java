@@ -25,9 +25,9 @@ public class Image implements Comparable<Image>, Serializable {
 
     @NotNull
     @Size(
-       min = 2,
-       max = 255,
-       message = "Image name is required, minimum 2, maximum 255 characters."
+        min = 2,
+        max = 255,
+        message = "Image name is required, minimum 2, maximum 255 characters."
     )
     protected String name;
 

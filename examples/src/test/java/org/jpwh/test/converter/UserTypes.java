@@ -68,7 +68,6 @@ public class UserTypes extends JPATest {
             em.close();
 
 
-
         } finally {
             TM.rollback();
         }

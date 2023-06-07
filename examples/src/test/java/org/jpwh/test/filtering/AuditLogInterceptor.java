@@ -42,7 +42,7 @@ public class AuditLogInterceptor extends EmptyInterceptor {
         throws CallbackException {
 
         if (entity instanceof Auditable)
-            inserts.add((Auditable)entity);
+            inserts.add((Auditable) entity);
 
         return false; // We didn't modify the state
     }
@@ -57,7 +57,7 @@ public class AuditLogInterceptor extends EmptyInterceptor {
         throws CallbackException {
 
         if (entity instanceof Auditable)
-            updates.add((Auditable)entity);
+            updates.add((Auditable) entity);
 
         return false; // We didn't modify the currentState
     }

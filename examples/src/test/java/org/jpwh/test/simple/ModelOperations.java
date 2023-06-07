@@ -53,7 +53,7 @@ public class ModelOperations {
 
         ConstraintViolation<Item> violation = violations.iterator().next();
         String failedPropertyName =
-                violation.getPropertyPath().iterator().next().getName();
+            violation.getPropertyPath().iterator().next().getName();
 
         assertEquals(failedPropertyName, "auctionEnd");
 

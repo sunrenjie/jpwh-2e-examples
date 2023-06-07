@@ -126,7 +126,7 @@ public class AuctionClient {
         // Handle some recoverable exceptions which don't kill the conversation
         try {
             itemService.placeBid(promptBid(itemBidSummary));
-        } catch (NumberFormatException ex ) { // Thrown by client!
+        } catch (NumberFormatException ex) { // Thrown by client!
             System.out.println("=> Sorry! Not a number, try again.");
             placeBid(itemService, itemBidSummary);
         } catch (InvalidBidException ex) { // Thrown by server!
@@ -164,7 +164,7 @@ public class AuctionClient {
             else if (cause instanceof ConstraintViolationException)
                 System.err.println(
                     "=> Sorry! The server reported validation errors: " +
-                    ((ConstraintViolationException)cause).getConstraintViolations()
+                        ((ConstraintViolationException) cause).getConstraintViolations()
                 );
             else
                 throw ex;

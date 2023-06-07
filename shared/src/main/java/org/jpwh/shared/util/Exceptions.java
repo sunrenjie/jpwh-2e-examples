@@ -33,9 +33,9 @@ public class Exceptions {
 
     public static void main(String[] args) {
         Exception ex = new Exception("WRAPPER",
-                new IllegalArgumentException("CAUSE1",
-                        new IllegalArgumentException("CAUSE2",
-                                new UnsupportedOperationException("CAUSE3"))));
+            new IllegalArgumentException("CAUSE1",
+                new IllegalArgumentException("CAUSE2",
+                    new UnsupportedOperationException("CAUSE3"))));
 
         assert unwrap(ex, Exception.class).getMessage().equals("WRAPPER");
         assert unwrap(ex, IllegalArgumentException.class).getMessage().equals("CAUSE1");

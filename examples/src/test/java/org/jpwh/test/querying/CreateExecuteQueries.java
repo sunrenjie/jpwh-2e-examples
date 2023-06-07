@@ -338,14 +338,14 @@ public class CreateExecuteQueries extends QueryingTest {
                    result set into memory.
                  */
                 org.hibernate.ScrollableResults cursor =
-                        hibernateQuery.scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
+                    hibernateQuery.scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
 
                 /* 
                    Jump to the last row of the result in the database, then get the row number.
                    Since row numbers are zero-based, add one to get the total count of rows.
                  */
                 cursor.last();
-                int count = cursor.getRowNumber()+1;
+                int count = cursor.getRowNumber() + 1;
 
                 /* 
                    You must close the database cursor.
@@ -449,7 +449,7 @@ public class CreateExecuteQueries extends QueryingTest {
                 );
 
                 org.hibernate.ScrollableResults cursor =
-                        query.scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
+                    query.scroll(org.hibernate.ScrollMode.SCROLL_INSENSITIVE);
 
                 // Jump to third result row
                 cursor.setRowNumber(2);

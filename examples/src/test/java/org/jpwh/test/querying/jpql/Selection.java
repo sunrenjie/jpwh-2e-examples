@@ -66,7 +66,7 @@ public class Selection extends QueryingTest {
             em.clear();
             {
                 Query query = // ...
-                   em.createNamedQuery("polymorphismRestrictParameter");
+                    em.createNamedQuery("polymorphismRestrictParameter");
                 query.setParameter("types", Arrays.asList(CreditCard.class, BankAccount.class));
                 assertEquals(query.getResultList().size(), 2);
             }

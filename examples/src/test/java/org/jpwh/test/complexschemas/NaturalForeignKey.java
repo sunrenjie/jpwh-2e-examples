@@ -28,7 +28,7 @@ public class NaturalForeignKey extends JPATest {
             {
                 User user = new User("1234");
                 em.persist(user);
-                
+
                 Item item = new Item("Some Item");
                 item.setSeller(user);
                 em.persist(item);
@@ -43,11 +43,11 @@ public class NaturalForeignKey extends JPATest {
 
             {
                 User user = em.find(User.class, USER_ID);
-                
-                Item item = (Item)em.createQuery(
+
+                Item item = (Item) em.createQuery(
                     "select i from Item i where i.seller = :u"
                 ).setParameter("u", user).getSingleResult();
-                
+
                 assertEquals(item.getName(), "Some Item");
             }
 

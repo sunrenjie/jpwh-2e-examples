@@ -7,7 +7,7 @@
         <create>
             create procedure FIND_USER_BY_ID(in PARAM_USER_ID bigint)
             begin
-                select * from USERS where ID = PARAM_USER_ID;
+            select * from USERS where ID = PARAM_USER_ID;
             end
         </create>
         <drop>
@@ -20,11 +20,11 @@
     <database-object>
         <create>
             create procedure INSERT_USER(in PARAM_ACTIVATED bit,
-                                         in PARAM_USERNAME varchar(255),
-                                         in PARAM_ID bigint)
+            in PARAM_USERNAME varchar(255),
+            in PARAM_ID bigint)
             begin
-                insert into USERS (ACTIVATED, USERNAME, ID)
-                    values (PARAM_ACTIVATED, PARAM_USERNAME, PARAM_ID);
+            insert into USERS (ACTIVATED, USERNAME, ID)
+            values (PARAM_ACTIVATED, PARAM_USERNAME, PARAM_ID);
             end
         </create>
         <drop>
@@ -36,13 +36,13 @@
     <database-object>
         <create>
             create procedure UPDATE_USER(in PARAM_ACTIVATED bit,
-                                         in PARAM_USERNAME varchar(255),
-                                         in PARAM_ID bigint)
+            in PARAM_USERNAME varchar(255),
+            in PARAM_ID bigint)
             begin
-                update USERS set
-                    ACTIVATED = PARAM_ACTIVATED,
-                    USERNAME = PARAM_USERNAME
-                where ID = PARAM_ID;
+            update USERS set
+            ACTIVATED = PARAM_ACTIVATED,
+            USERNAME = PARAM_USERNAME
+            where ID = PARAM_ID;
             end
         </create>
         <drop>
@@ -55,7 +55,7 @@
         <create>
             create procedure DELETE_USER(in PARAM_ID bigint)
             begin
-                delete from USERS where ID = PARAM_ID;
+            delete from USERS where ID = PARAM_ID;
             end
         </create>
         <drop>

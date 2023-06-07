@@ -43,8 +43,8 @@ public class SortedMapOfStrings extends JPATest {
             assertEquals(item.getImages().size(), 3);
 
             // Sorted in-memory with TreeMap
-            Iterator<Map.Entry<String,String>> it = item.getImages().entrySet().iterator();
-            Map.Entry<String,String> entry;
+            Iterator<Map.Entry<String, String>> it = item.getImages().entrySet().iterator();
+            Map.Entry<String, String> entry;
             entry = it.next();
             assertEquals(entry.getKey(), "foo.jpg");
             assertEquals(entry.getValue(), "Foo");

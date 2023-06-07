@@ -26,8 +26,8 @@ public class Address {
 
     @ElementCollection
     @CollectionTable(
-            name = "CONTACT", // Defaults to USER_CONTACTS
-            joinColumns = @JoinColumn(name = "USER_ID")) // Default, actually
+        name = "CONTACT", // Defaults to USER_CONTACTS
+        joinColumns = @JoinColumn(name = "USER_ID")) // Default, actually
     @Column(name = "NAME", nullable = false) // Defaults to CONTACTS
     protected Set<String> contacts = new HashSet<String>();
 

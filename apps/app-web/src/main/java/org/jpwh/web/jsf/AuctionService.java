@@ -99,9 +99,9 @@ public class AuctionService {
             the auction page with a message.
          */
         if (!getItem().isValidBidAmount(
-                getHighestBidAmount(),
-                getNewBidAmount()
-            )) {
+            getHighestBidAmount(),
+            getNewBidAmount()
+        )) {
             ValidationMessages.addFacesMessage("Auction.bid.TooLow");
             return null;
         }

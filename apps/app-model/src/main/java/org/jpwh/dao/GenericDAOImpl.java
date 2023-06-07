@@ -44,7 +44,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 
     public Long getCount() {
         CriteriaQuery<Long> c =
-           em.getCriteriaBuilder().createQuery(Long.class);
+            em.getCriteriaBuilder().createQuery(Long.class);
         c.select(em.getCriteriaBuilder().count(c.from(entityClass)));
         return em.createQuery(c).getSingleResult();
     }

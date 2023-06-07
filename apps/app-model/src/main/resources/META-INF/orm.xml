@@ -21,7 +21,7 @@
         <query>
             select
             new org.jpwh.model.ItemBidSummary(
-                i.id, i.name, i.auctionEnd, max(b.amount)
+            i.id, i.name, i.auctionEnd, max(b.amount)
             )
             from Bid b right outer join b.item i
             group by i.id, i.name, i.auctionEnd

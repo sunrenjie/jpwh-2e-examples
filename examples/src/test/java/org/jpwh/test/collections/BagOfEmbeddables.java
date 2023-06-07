@@ -27,16 +27,16 @@ public class BagOfEmbeddables extends JPATest {
             Item someItem = new Item();
 
             someItem.getImages().add(new Image(
-                    "Foo", "foo.jpg", 640, 480
+                "Foo", "foo.jpg", 640, 480
             ));
             someItem.getImages().add(new Image(
-                    null, "bar.jpg", 800, 600 // Columns can be NULL now!
+                null, "bar.jpg", 800, 600 // Columns can be NULL now!
             ));
             someItem.getImages().add(new Image(
-                    "Baz", "baz.jpg", 1024, 768
+                "Baz", "baz.jpg", 1024, 768
             ));
             someItem.getImages().add(new Image(
-                    "Baz", "baz.jpg", 1024, 768
+                "Baz", "baz.jpg", 1024, 768
             )); // Duplicate allowed!
 
             em.persist(someItem);

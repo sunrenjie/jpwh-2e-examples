@@ -32,7 +32,7 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     @org.hibernate.annotations.Fetch(
-       org.hibernate.annotations.FetchMode.SUBSELECT
+        org.hibernate.annotations.FetchMode.SUBSELECT
     )
     protected Set<Bid> bids = new HashSet<>();
 

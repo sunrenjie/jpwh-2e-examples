@@ -14,10 +14,10 @@ import javax.persistence.UniqueConstraint;
 @Table(
     name = "USERS",
     uniqueConstraints =
-        @UniqueConstraint(
-            name = "UNQ_USERNAME_EMAIL",
-            columnNames = { "USERNAME", "EMAIL" }
-        )
+    @UniqueConstraint(
+        name = "UNQ_USERNAME_EMAIL",
+        columnNames = {"USERNAME", "EMAIL"}
+    )
     ,
     indexes = {
         @Index(
@@ -45,7 +45,7 @@ public class User {
 
     @Column(columnDefinition =
         "varchar(15) not null unique" +
-        " check (not substring(lower(USERNAME), 0, 5) = 'admin')"
+            " check (not substring(lower(USERNAME), 0, 5) = 'admin')"
     )
     // @org.hibernate.annotations.Check currently not supported on properties!
     protected String username;

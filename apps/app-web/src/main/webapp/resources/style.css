@@ -4,7 +4,7 @@ a {
 }
 
 a, a:visited {
-  color: #186cce;
+    color: #186cce;
 }
 
 a:hover {
@@ -94,8 +94,8 @@ body {
     min-width: 10em;
 }
 
-.dataTable td+td,
-.dataTable th+th {
+.dataTable td + td,
+.dataTable th + th {
     border-left: 0.1em solid #bbbbbb;
 }
 

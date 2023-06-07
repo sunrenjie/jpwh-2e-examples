@@ -28,12 +28,12 @@ abstract public class InheritanceCRUD extends JPATest {
 
         private final String sql;
 
-      /**
+        /**
          * Creates a new query.
          *
-         * @param sqlResource   classpath resource for a SQL text file
-         * @param matchOrder whether the expectedRows are to be matched in order
-         * @param expectedRows  expected rows, each string is a regex
+         * @param sqlResource  classpath resource for a SQL text file
+         * @param matchOrder   whether the expectedRows are to be matched in order
+         * @param expectedRows expected rows, each string is a regex
          * @throws IOException
          */
         public JdbcQueryWork(String sqlResource, boolean matchOrder, String[]... expectedRows) throws IOException {

@@ -51,12 +51,12 @@ public class User implements Serializable {
 
     @Embedded // Not necessary...
     @AttributeOverrides({
-            @AttributeOverride(name = "street",
-                    column = @Column(name = "BILLING_STREET")), // NULLable!
-            @AttributeOverride(name = "zipcode",
-                    column = @Column(name = "BILLING_ZIPCODE", length = 5)),
-            @AttributeOverride(name = "city",
-                    column = @Column(name = "BILLING_CITY"))
+        @AttributeOverride(name = "street",
+            column = @Column(name = "BILLING_STREET")), // NULLable!
+        @AttributeOverride(name = "zipcode",
+            column = @Column(name = "BILLING_ZIPCODE", length = 5)),
+        @AttributeOverride(name = "city",
+            column = @Column(name = "BILLING_CITY"))
     })
     protected Address billingAddress;
 

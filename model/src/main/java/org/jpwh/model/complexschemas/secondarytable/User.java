@@ -38,14 +38,14 @@ public class User {
     @AttributeOverrides({
         @AttributeOverride(name = "street",
             column = @Column(table = "BILLING_ADDRESS",
-                             nullable = false)),
+                nullable = false)),
         @AttributeOverride(name = "zipcode",
             column = @Column(table = "BILLING_ADDRESS",
-                             length = 5,
-                             nullable = false)),
+                length = 5,
+                nullable = false)),
         @AttributeOverride(name = "city",
             column = @Column(table = "BILLING_ADDRESS",
-                             nullable = false))
+                nullable = false))
     })
     protected Address billingAddress;
 

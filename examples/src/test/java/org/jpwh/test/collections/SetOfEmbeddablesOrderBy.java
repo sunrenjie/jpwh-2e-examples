@@ -29,16 +29,16 @@ public class SetOfEmbeddablesOrderBy extends JPATest {
             Item someItem = new Item();
 
             someItem.getImages().add(new Image(
-                    "Foo", "foo.jpg", 640, 480
+                "Foo", "foo.jpg", 640, 480
             ));
             someItem.getImages().add(new Image(
-                    "Bar", "bar.jpg", 800, 600
+                "Bar", "bar.jpg", 800, 600
             ));
             someItem.getImages().add(new Image(
-                    "Baz", "baz.jpg", 1024, 768
+                "Baz", "baz.jpg", 1024, 768
             ));
             someItem.getImages().add(new Image(
-                    "Baz", "baz.jpg", 1024, 768
+                "Baz", "baz.jpg", 1024, 768
             ));
             assertEquals(someItem.getImages().size(), 3);
 

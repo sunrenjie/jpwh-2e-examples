@@ -78,7 +78,7 @@ public class LazyProperties extends JPATest {
             Session session = em.unwrap(Session.class);
             // You need to know the number of bytes you want to read from the stream!
             Blob blob = session.getLobHelper()
-                    .createBlob(imageInputStream, byteLength);
+                .createBlob(imageInputStream, byteLength);
 
             someItem.setImageBlob(blob);
             em.persist(someItem);

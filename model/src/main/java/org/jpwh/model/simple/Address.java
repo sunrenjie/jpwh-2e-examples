@@ -5,7 +5,6 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 /**
- * 
  * Instead of <code>@Entity</code>, this component POJO is marked with <code>@Embeddable</code>. It
  * has no identifier property.
  */

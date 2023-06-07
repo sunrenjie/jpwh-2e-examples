@@ -43,7 +43,7 @@ public class EntityManagerProducer {
         (see <a href="#PersistenceContext"/>), it's your job to close it.
      */
     public void dispose(@javax.enterprise.inject.Disposes
-                        EntityManager entityManager) {
+                            EntityManager entityManager) {
         if (entityManager.isOpen())
             entityManager.close();
     }

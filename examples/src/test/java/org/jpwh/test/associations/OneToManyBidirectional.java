@@ -58,7 +58,7 @@ public class OneToManyBidirectional extends JPATest {
             em = JPA.createEntityManager();
 
             Collection<Bid> bids =
-                    em.createQuery("select b from Bid b where b.item.id = :itemId")
+                em.createQuery("select b from Bid b where b.item.id = :itemId")
                     .setParameter("itemId", ITEM_ID)
                     .getResultList();
             assertEquals(bids.size(), 2);

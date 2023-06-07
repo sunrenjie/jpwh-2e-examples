@@ -18,9 +18,9 @@ public class Item {
 
     @NotNull
     @Size(
-            min = 2,
-            max = 255,
-            message = "Name is required, maximum 255 characters."
+        min = 2,
+        max = 255,
+        message = "Name is required, maximum 255 characters."
     )
 
     protected String name;

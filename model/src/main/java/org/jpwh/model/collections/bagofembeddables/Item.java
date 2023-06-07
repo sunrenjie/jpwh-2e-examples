@@ -21,9 +21,9 @@ public class Item {
     @ElementCollection
     @CollectionTable(name = "IMAGE")
     @org.hibernate.annotations.CollectionId(
-            columns = @Column(name = "IMAGE_ID"),
-            type = @org.hibernate.annotations.Type(type = "long"),
-            generator = Constants.ID_GENERATOR)
+        columns = @Column(name = "IMAGE_ID"),
+        type = @org.hibernate.annotations.Type(type = "long"),
+        generator = Constants.ID_GENERATOR)
     protected Collection<Image> images = new ArrayList<Image>();
 
     public Long getId() {

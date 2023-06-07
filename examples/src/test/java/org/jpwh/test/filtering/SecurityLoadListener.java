@@ -25,7 +25,7 @@ public class SecurityLoadListener extends DefaultLoadEventListener {
 
     static public class MySecurity {
         static boolean isAuthorized(String entityName, Serializable entityId) {
-           return true;
+            return true;
         }
     }
 

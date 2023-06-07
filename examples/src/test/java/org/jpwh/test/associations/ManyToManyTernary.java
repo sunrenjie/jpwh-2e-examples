@@ -96,8 +96,8 @@ public class ManyToManyTernary extends JPATest {
                     "select c from Category c " +
                         "join c.categorizedItems ci " +
                         "where ci.item = :itemParameter")
-                .setParameter("itemParameter", item)
-                .getResultList();
+                    .setParameter("itemParameter", item)
+                    .getResultList();
 
             assertEquals(categoriesOfItem.size(), 2);
 

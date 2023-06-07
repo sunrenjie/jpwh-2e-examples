@@ -12,9 +12,9 @@ public class Address {
         name = "addressKeyGenerator",
         strategy = "foreign",
         parameters =
-            @org.hibernate.annotations.Parameter(
-                name = "property", value = "user"
-            )
+        @org.hibernate.annotations.Parameter(
+            name = "property", value = "user"
+        )
     )
     protected Long id;
 
@@ -31,7 +31,6 @@ public class Address {
     @OneToOne(optional = false) // Create FK constraint on PK column
     @PrimaryKeyJoinColumn
     protected User user;
-
 
 
     protected Address() {

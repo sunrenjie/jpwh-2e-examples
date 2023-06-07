@@ -88,7 +88,7 @@ public class CustomSQL extends JPATest {
             bid.setItem(item);
             bid.setBidder(janeroe);
             em.persist(bid);
-            testData.bids.identifiers[i-1] = bid.getId();
+            testData.bids.identifiers[i - 1] = bid.getId();
         }
 
         Item otherItem = new Item(category, "Inactive item", CalendarUtil.TOMORROW.getTime(), johndoe);

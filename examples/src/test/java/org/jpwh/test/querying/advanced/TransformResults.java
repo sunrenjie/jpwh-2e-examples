@@ -140,7 +140,7 @@ public class TransformResults extends QueryingTest {
                     new ResultTransformer() {
 
                         /**
-                         * 
+                         *
                          * For each result "row", an <code>Object[]</code> tuple has to be transformed into
                          * the desired result value for that row. Here you access each projection element by
                          * index in the tuple array, and then call the <code>ItemSummaryFactory</code> to produce
@@ -165,7 +165,7 @@ public class TransformResults extends QueryingTest {
                         }
 
                         /**
-                         * 
+                         *
                          * You can wrap or modify the result list after after transforming the tuples.
                          * Here you make the returned <code>List</code> unmodifiable,
                          * ideal for a reporting screen where nothing should change the data.

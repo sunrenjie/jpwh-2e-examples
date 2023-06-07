@@ -20,7 +20,7 @@ public class Item {
     protected String name;
 
     @OneToMany(mappedBy = "item", // Required for bidirectional association
-               fetch = FetchType.LAZY) // The default
+        fetch = FetchType.LAZY) // The default
     protected Set<Bid> bids = new HashSet<>();
 
     public Item() {

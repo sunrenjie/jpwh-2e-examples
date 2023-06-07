@@ -23,11 +23,11 @@ public class Shipment {
     @JoinTable(
         name = "ITEM_SHIPMENT", // Required!
         joinColumns =
-            @JoinColumn(name = "SHIPMENT_ID"),  // Defaults to ID
+        @JoinColumn(name = "SHIPMENT_ID"),  // Defaults to ID
         inverseJoinColumns =
-            @JoinColumn(name = "ITEM_ID",  // Defaults to AUCTION_ID
-                        nullable = false,
-                        unique = true)
+        @JoinColumn(name = "ITEM_ID",  // Defaults to AUCTION_ID
+            nullable = false,
+            unique = true)
     )
     protected Item auction;
 

@@ -13,10 +13,10 @@
            timeToLiveSeconds="60"/>
 
     <cache name="org.jpwh.model.cache.User##NaturalId"
-            maxElementsInMemory="500"
-            eternal="false"
-            timeToIdleSeconds="30"
-            timeToLiveSeconds="60"/>
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="30"
+           timeToLiveSeconds="60"/>
 
     <cache name="org.jpwh.model.cache.Item"
            maxElementsInMemory="5000"
@@ -37,14 +37,14 @@
            timeToLiveSeconds="3600"/>
 
     <cache name="org.hibernate.cache.internal.StandardQueryCache"
-            maxElementsInMemory="500"
-            eternal="false"
-            timeToIdleSeconds="600"
-            timeToLiveSeconds="3600"/>
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="3600"/>
 
     <cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
-            maxElementsInMemory="50"
-            eternal="true"/>
+           maxElementsInMemory="50"
+           eternal="true"/>
 
 
 </ehcache>

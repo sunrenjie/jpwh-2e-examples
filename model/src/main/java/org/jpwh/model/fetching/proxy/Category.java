@@ -25,8 +25,8 @@ public class Category {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "CATEGORY_ITEM",
-       joinColumns = @JoinColumn(name = "CATEGORY_ID"),
-       inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
+        joinColumns = @JoinColumn(name = "CATEGORY_ID"),
+        inverseJoinColumns = @JoinColumn(name = "ITEM_ID"))
     protected Set<Item> items = new HashSet<Item>();
 
     public Category() {

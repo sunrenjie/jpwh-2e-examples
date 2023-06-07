@@ -22,9 +22,9 @@ public class Item {
     @CollectionTable(name = "IMAGE")
     @Column(name = "FILENAME")
     @org.hibernate.annotations.CollectionId( // Surrogate PK allows duplicates!
-            columns = @Column(name = "IMAGE_ID"),
-            type = @org.hibernate.annotations.Type(type = "long"),
-            generator = Constants.ID_GENERATOR)
+        columns = @Column(name = "IMAGE_ID"),
+        type = @org.hibernate.annotations.Type(type = "long"),
+        generator = Constants.ID_GENERATOR)
     @org.hibernate.annotations.OrderBy(clause = "FILENAME desc")
     protected Collection<String> images = new ArrayList<String>();
 

@@ -42,8 +42,8 @@
                 you want to work with a clean database for every test run.
             -->
             <property
-                name="javax.persistence.schema-generation.database.action"
-                value="drop-and-create"/>
+                    name="javax.persistence.schema-generation.database.action"
+                    value="drop-and-create"/>
 
             <!-- 
                 When printing SQL in logs, let Hibernate format the SQL nicely and generate

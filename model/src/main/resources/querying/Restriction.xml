@@ -38,8 +38,8 @@
     <named-query name="tupleComparison">
         <query>
             select u from User u
-                where (u.firstname, u.lastname)
-                    in (('John', 'Doe'), ('Jane', 'Roe'))
+            where (u.firstname, u.lastname)
+            in (('John', 'Doe'), ('Jane', 'Roe'))
         </query>
     </named-query>
 
@@ -47,15 +47,15 @@
         <query>
             <!-- Don't do this with annotation mappings, only with XML metadata! -->
             select u from User u
-                where u.homeAddress =
-                    ('Some Street 123', '12345', 'Some City')
+            where u.homeAddress =
+            ('Some Street 123', '12345', 'Some City')
         </query>
     </named-query>
 
     <named-query name="enum">
         <query>
             select i from Item i
-                where i.auctionType = org.jpwh.model.querying.AuctionType.HIGHEST_BID
+            where i.auctionType = org.jpwh.model.querying.AuctionType.HIGHEST_BID
         </query>
     </named-query>
 
@@ -104,8 +104,8 @@
     <named-query name="logicalGroups">
         <query>
             select i from Item i
-                where (i.name like 'Fo%' and i.buyNowPrice is not null)
-                      or i.name = 'Bar'
+            where (i.name like 'Fo%' and i.buyNowPrice is not null)
+            or i.name = 'Bar'
         </query>
     </named-query>
 
@@ -118,39 +118,39 @@
     <named-query name="collectionNotEmpty">
         <query>
             select c from Category c
-                where c.items is not empty
+            where c.items is not empty
         </query>
     </named-query>
 
     <named-query name="memberOf">
         <query>
             select c from Category c
-                where :item member of c.items
+            where :item member of c.items
         </query>
     </named-query>
 
     <named-query name="collectionSize">
         <query>
             select c from Category c
-                where size(c.items) > 1
+            where size(c.items) > 1
         </query>
     </named-query>
 
     <named-query name="functionsDateDiff">
         <query>
             select i from Item i
-                where
-                    function('DATEDIFF', 'DAY', i.createdOn, i.auctionEnd)
-                > 1
+            where
+            function('DATEDIFF', 'DAY', i.createdOn, i.auctionEnd)
+            > 1
         </query>
     </named-query>
 
     <named-query name="functionsDateDiffHibernate">
         <query>
             select i from Item i
-                where
-                    datediff('DAY', i.createdOn, i.auctionEnd)
-                > 1
+            where
+            datediff('DAY', i.createdOn, i.auctionEnd)
+            > 1
         </query>
     </named-query>
 

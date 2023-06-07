@@ -32,17 +32,17 @@ public class Item implements Serializable {
 
     @NotNull
     @Size(
-       min = 2,
-       max = 255,
-       message = "Name is required, minimum 2, maximum 255 characters."
+        min = 2,
+        max = 255,
+        message = "Name is required, minimum 2, maximum 255 characters."
     )
     protected String name;
 
     @NotNull
     @Size(
-       min = 10,
-       max = 4000,
-       message = "Description is required, minimum 10, maximum 4000 characters."
+        min = 10,
+        max = 4000,
+        message = "Description is required, minimum 10, maximum 4000 characters."
     )
     protected String description;
 
@@ -122,7 +122,7 @@ public class Item implements Serializable {
 
     public Bid getHighestBid() {
         return getBids().size() > 0
-           ? getBidsHighestFirst().get(0) : null;
+            ? getBidsHighestFirst().get(0) : null;
     }
 
     public List<Bid> getBidsHighestFirst() {

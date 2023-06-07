@@ -121,8 +121,8 @@ public class LazyProxyCollections extends JPATest {
                 assertNotEquals(item.getClass(), Item.class);
 
                 assertEquals(
-                   HibernateProxyHelper.getClassWithoutInitializingProxy(item),
-                   Item.class
+                    HibernateProxyHelper.getClassWithoutInitializingProxy(item),
+                    Item.class
                 );
 
                 PersistenceUtil persistenceUtil = Persistence.getPersistenceUtil();

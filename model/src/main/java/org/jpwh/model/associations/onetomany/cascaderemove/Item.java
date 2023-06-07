@@ -16,7 +16,7 @@ public class Item {
     protected String name;
 
     @OneToMany(mappedBy = "item",
-               cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+        cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     protected Set<Bid> bids = new HashSet<>();
 
     public Item() {

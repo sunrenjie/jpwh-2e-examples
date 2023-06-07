@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @AttributeOverride(
-        name = "owner",
-        column = @Column(name = "CC_OWNER", nullable = false))
+    name = "owner",
+    column = @Column(name = "CC_OWNER", nullable = false))
 public class CreditCard extends BillingDetails {
 
     @Id

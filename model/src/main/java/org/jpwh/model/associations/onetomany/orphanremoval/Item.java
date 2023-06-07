@@ -20,8 +20,8 @@ public class Item {
     protected String name;
 
     @OneToMany(mappedBy = "item",
-               cascade = CascadeType.PERSIST,
-               orphanRemoval = true) // Includes CascadeType.REMOVE
+        cascade = CascadeType.PERSIST,
+        orphanRemoval = true) // Includes CascadeType.REMOVE
     protected Set<Bid> bids = new HashSet<>();
 
     public Item() {

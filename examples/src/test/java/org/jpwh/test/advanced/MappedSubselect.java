@@ -51,7 +51,7 @@ public class MappedSubselect extends JPATest {
                     "select ibs from ItemBidSummary ibs where ibs.itemId = :id"
                 );
                 ItemBidSummary itemBidSummary =
-                    (ItemBidSummary)query.setParameter("id", ITEM_ID).getSingleResult();
+                    (ItemBidSummary) query.setParameter("id", ITEM_ID).getSingleResult();
 
                 assertEquals(itemBidSummary.getName(), "AUCTION: New name");
             }

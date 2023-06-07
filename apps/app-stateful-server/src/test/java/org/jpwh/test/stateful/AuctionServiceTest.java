@@ -129,7 +129,7 @@ public class AuctionServiceTest extends Arquillian {
         }
         assertTrue(test, "StaleObjectStateException should have been thrown");
 
-        BigDecimal lowBidAmount = new BigDecimal(itemBidSummary.getHighestBid().intValue()-1);
+        BigDecimal lowBidAmount = new BigDecimal(itemBidSummary.getHighestBid().intValue() - 1);
         itemService = itemServiceInstance.get();
         itemService.startConversation(itemBidSummary.getItemId());
         test = false;

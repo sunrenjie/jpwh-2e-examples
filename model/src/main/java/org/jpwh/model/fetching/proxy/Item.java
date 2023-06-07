@@ -87,7 +87,7 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     @org.hibernate.annotations.LazyCollection(
-       org.hibernate.annotations.LazyCollectionOption.EXTRA
+        org.hibernate.annotations.LazyCollectionOption.EXTRA
     )
     public Set<Bid> getBids() {
         return bids;

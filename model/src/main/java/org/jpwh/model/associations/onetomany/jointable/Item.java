@@ -19,9 +19,9 @@ public class Item {
     @JoinTable(
         name = "ITEM_BUYER",
         joinColumns =
-            @JoinColumn(name = "ITEM_ID"), // Defaults to ID
+        @JoinColumn(name = "ITEM_ID"), // Defaults to ID
         inverseJoinColumns =
-            @JoinColumn(nullable = false) // Defaults to BUYER_ID
+        @JoinColumn(nullable = false) // Defaults to BUYER_ID
     )
     protected User buyer;
 

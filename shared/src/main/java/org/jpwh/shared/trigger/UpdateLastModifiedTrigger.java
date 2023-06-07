@@ -27,7 +27,7 @@ public class UpdateLastModifiedTrigger extends TriggerAdapter {
 
     @Override
     public void fire(Connection conn, ResultSet oldRow, ResultSet newRow) throws SQLException {
-        if (newRow == null ) return; // This is a DELETE
+        if (newRow == null) return; // This is a DELETE
 
         if (oldRow != null) {
             // This is an UPDATE
@@ -42,9 +42,9 @@ public class UpdateLastModifiedTrigger extends TriggerAdapter {
         }
 
         PreparedStatement statement = conn.prepareStatement(
-                "update " + tableName +
-                        " set " + COLUMN_LASTMODIFIED + " = current_timestamp()" +
-                        " where " + COLUMN_ID + " = ?"
+            "update " + tableName +
+                " set " + COLUMN_LASTMODIFIED + " = current_timestamp()" +
+                " where " + COLUMN_ID + " = ?"
         );
         Long id = newRow.getLong(COLUMN_ID);
         statement.setLong(1, id);

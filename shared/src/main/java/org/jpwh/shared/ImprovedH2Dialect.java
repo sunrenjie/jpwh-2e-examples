@@ -9,6 +9,6 @@ public class ImprovedH2Dialect extends H2Dialect {
     public ImprovedH2Dialect() {
         super();
         // Demonstration of function customization in SQL dialect
-        registerFunction( "lpad", new StandardSQLFunction( "lpad", StandardBasicTypes.STRING ) );
+        registerFunction("lpad", new StandardSQLFunction("lpad", StandardBasicTypes.STRING));
     }
 }

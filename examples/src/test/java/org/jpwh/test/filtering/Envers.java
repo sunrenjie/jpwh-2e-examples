@@ -98,7 +98,7 @@ public class Envers extends JPATest {
                  */
                 Number revisionCreate = auditReader.getRevisionNumberForDate(TIMESTAMP_CREATE);
                 Number revisionUpdate = auditReader.getRevisionNumberForDate(TIMESTAMP_UPDATE);
-                Number revisionDelete  = auditReader.getRevisionNumberForDate(TIMESTAMP_DELETE);
+                Number revisionDelete = auditReader.getRevisionNumberForDate(TIMESTAMP_DELETE);
 
                 /* 
                    If you don't have a timestamp, you can get all revision numbers in which a
@@ -147,8 +147,8 @@ public class Envers extends JPATest {
                            revision type.
                          */
                         Item item = (Item) tuple[0];
-                        DefaultRevisionEntity revision = (DefaultRevisionEntity)tuple[1];
-                        RevisionType revisionType = (RevisionType)tuple[2];
+                        DefaultRevisionEntity revision = (DefaultRevisionEntity) tuple[1];
+                        RevisionType revisionType = (RevisionType) tuple[2];
 
                         /* 
                            The revision type indicates why Envers created the revision, because
@@ -239,7 +239,7 @@ public class Envers extends JPATest {
                     query.setMaxResults(10);
 
                     assertEquals(query.getResultList().size(), 1);
-                    Item result = (Item)query.getResultList().get(0);
+                    Item result = (Item) query.getResultList().get(0);
                     assertEquals(result.getSeller().getUsername(), "doejohn");
                 }
                 em.clear();
@@ -252,7 +252,7 @@ public class Envers extends JPATest {
                     );
 
                     assertEquals(query.getResultList().size(), 1);
-                    String result = (String)query.getSingleResult();
+                    String result = (String) query.getSingleResult();
                     assertEquals(result, "Bar");
                 }
                 em.clear();

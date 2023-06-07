@@ -28,7 +28,7 @@ public class Item {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY) // Has no effect, no User proxy
     @org.hibernate.annotations.LazyToOne( // Requires bytecode enhancement!
-       org.hibernate.annotations.LazyToOneOption.NO_PROXY
+        org.hibernate.annotations.LazyToOneOption.NO_PROXY
     )
     protected User seller;
 

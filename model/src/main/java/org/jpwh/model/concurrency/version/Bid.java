@@ -30,7 +30,7 @@ public class Bid {
     public Bid(BigDecimal amount, Item item, Bid lastBid) throws InvalidBidException {
         if (lastBid != null && amount.compareTo(lastBid.getAmount()) < 1) {
             throw new InvalidBidException(
-                "Bid amount '" + amount +" too low, last bid was: " + lastBid.getAmount()
+                "Bid amount '" + amount + " too low, last bid was: " + lastBid.getAmount()
             );
         }
         this.amount = amount;

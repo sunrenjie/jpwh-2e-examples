@@ -22,8 +22,8 @@ public class Item {
     @ElementCollection
     @CollectionTable(name = "IMAGE")
     @AttributeOverride(
-            name = "filename",
-            column = @Column(name = "FNAME", nullable = false)
+        name = "filename",
+        column = @Column(name = "FNAME", nullable = false)
     )
     protected Set<Image> images = new HashSet<Image>();
 
