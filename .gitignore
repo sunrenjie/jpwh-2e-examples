@@ -11,4 +11,5 @@ target
 .idea
 *.iml
 *.swp
+*.log
 datanucleus.loglib/

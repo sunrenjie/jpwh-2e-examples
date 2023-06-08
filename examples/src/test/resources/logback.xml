@@ -1,15 +1,52 @@
-<configuration debug="false">
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Set debug to true to output start-up context info. -->
+<configuration debug="true">
+
+    <property name="LOGS" value="./logs" />
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <!-- Including logger name, class name, and file line number can be useful.
+            See also http://logback.qos.ch/manual/layouts.html -->
+            <Pattern>
+                %d{ISO8601} %highlight(%-5level) [%blue(%t)] %logger{15} %yellow(%C{15}.%M\(\):%L) %msg%n%throwable
+            </Pattern>
         </encoder>
     </appender>
 
-    <logger name="org.hibernate.SQL" level="debug" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/jpwh_2e_examples.log</file>
+        <encoder>
+            <Pattern>
+                %d{ISO8601} %highlight(%-5level) [%blue(%t)] %logger %yellow(%C{15}.%M\(\):%L) %msg%n%throwable
+            </Pattern>
+        </encoder>
 
-    <root level="${logLevel:-info}">
-        <appender-ref ref="STDOUT"/>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>${LOGS}/archived/jpwh_2e_examples-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- max file size of each archived file -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- total size of all archive files -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- days to keep -->
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- LOG everything at INFO level -->
+    <root level="info">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
     </root>
+
+    <!-- to trace how SQLs are executed -->
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
+
+    <!-- And a few interesting packages at TRACE level -->
+    <logger name="com.example" level="trace" additivity="false">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+    </logger>
 </configuration>
