@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.jpwh</groupId>
-        <artifactId>jpwh</artifactId>
+        <artifactId>jpwh-2e-examples</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -67,9 +67,9 @@
 
         <!-- The standard annotations we use in the model, JPA and Bean Validation -->
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>${hibernate.jpa21.api.version}</version>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>

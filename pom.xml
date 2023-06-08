@@ -7,13 +7,13 @@
     <!-- ##################################################################################################### -->
 
     <groupId>org.jpwh</groupId>
-    <artifactId>jpwh</artifactId>
+    <artifactId>jpwh-2e-examples</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <!-- ##################################################################################################### -->
 
-    <name>JPwH</name>
+    <name>jpwh-2e-examples</name>
     <url>http://jpwh.org//</url>
     <developers>
         <developer>
@@ -31,33 +31,29 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <!-- The standardized API -->
-        <hibernate.jpa21.api.version>1.0.0.Final</hibernate.jpa21.api.version>
-
         <!-- Hibernate's implementation -->
-        <hibernate.version>5.4.3.Final</hibernate.version>
+        <hibernate.version>5.6.15.Final</hibernate.version>
 
         <!-- The standardized Bean Validation API -->
         <validation.api.version>2.0.0.Final</validation.api.version>
 
         <!-- Hibernate's implementation -->
-        <hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
+        <hibernate.validator.version>6.2.5.Final</hibernate.validator.version>
         <javax-el.version>3.0.1-b04</javax-el.version>
 
         <!-- Everyone's favorite -->
-        <slf4j.impl.version>1.6.1</slf4j.impl.version>
+        <slf4j.impl.version>2.0.7</slf4j.impl.version>
 
         <!-- For small scale deployment, use the H2 RDBMS, all Java -->
-        <h2.version>1.4.199</h2.version>
+        <h2.version>2.1.214</h2.version>
 
         <!-- In Java SE you should use a JTA transaction manager as a JDBC connection pool, Bitronix is good -->
         <btm.version>2.1.4</btm.version>
 
         <!-- Integration testing with TestNG is easier than JUnit -->
-        <testng.version>6.8.7</testng.version>
+        <testng.version>7.5.1</testng.version>
 
-        <!-- Java EE 7 API for the application examples -->
-        <javaee-api.version>7.0</javaee-api.version>
+        <javaee-api.version>8.0.1</javaee-api.version>
 
         <!-- Application examples integration testing with Java EE environment -->
         <shrinkwrap.version>2.0.2</shrinkwrap.version>
@@ -65,10 +61,10 @@
         <arquillian.extension.persistence.version>1.0.0.Alpha6</arquillian.extension.persistence.version>
         <arquillian.extension.rest.version>1.0.0.Alpha3</arquillian.extension.rest.version>
         <dbunit.version>2.4.9</dbunit.version>
-        <wildfly.version>8.1.0.Final</wildfly.version>
+        <wildfly.version>8.2.1.Final</wildfly.version>
 
         <!-- Wildfly server deployment plugin for the application examples -->
-        <wildfly.maven-plugin.version>1.0.2.Final</wildfly.maven-plugin.version>
+        <wildfly.maven-plugin.version>4.1.0.Final</wildfly.maven-plugin.version>
 
     </properties>
 
@@ -136,8 +132,9 @@
 
                 <!-- For the application examples, we need WAR packaging -->
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.1.1</version>
+                    <version>3.3.2</version>
                     <configuration>
                         <!-- WARs no longer have this file in 2014 -->
                         <failOnMissingWebXml>false</failOnMissingWebXml>
