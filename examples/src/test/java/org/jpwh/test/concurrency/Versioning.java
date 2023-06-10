@@ -1,5 +1,6 @@
 package org.jpwh.test.concurrency;
 
+import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.jpwh.env.JPATest;
 import org.jpwh.model.concurrency.version.Bid;
 import org.jpwh.model.concurrency.version.Category;
@@ -27,6 +28,8 @@ public class Versioning extends JPATest {
         configurePersistenceUnit("ConcurrencyVersioningPU");
     }
 
+    // What's thrown will be OptimisticLockException wrapped from StaleStateException.
+    // We catch OptimisticLockException here, so no unwrapCauseOfType() needed.
     @Test(expectedExceptions = OptimisticLockException.class)
     public void firstCommitWins() throws Throwable {
         UserTransaction tx = TM.getUserTransaction();
@@ -94,17 +97,14 @@ public class Versioning extends JPATest {
              */
             em.flush();
             // update ITEM set NAME = ?, VERSION = 1 where ID = ? and VERSION = 0
-
-        } catch (Exception ex) {
-            throw unwrapCauseOfType(ex, OptimisticLockException.class);
         } finally {
             TM.rollback();
         }
     }
 
-    // TODO This throws the wrong exception!
-    // @Test(expectedExceptions = OptimisticLockException.class)
-    @Test(expectedExceptions = org.hibernate.OptimisticLockException.class)
+    // What's thrown will be BitronixRollbackException wrapped from OptimisticEntityLockException.
+    // Below, we will catch and call unwrapCauseOfType().
+    @Test(expectedExceptions = OptimisticEntityLockException.class)
     public void manualVersionChecking() throws Throwable {
         final ConcurrencyTestData testData = storeCategoriesAndItems();
         Long[] CATEGORIES = testData.categories.identifiers;
@@ -117,7 +117,7 @@ public class Versioning extends JPATest {
             BigDecimal totalPrice = new BigDecimal(0);
             for (Long categoryId : CATEGORIES) {
 
-                /* 
+                /*
                    For each <code>Category</code>, query all <code>Item</code> instances with
                    an <code>OPTIMISTIC</code> lock mode. Hibernate now knows it has to
                    check each <code>Item</code> at flush time.
@@ -166,26 +166,26 @@ public class Versioning extends JPATest {
                 }
             }
 
-            /* 
+            /*
                For each <code>Item</code> loaded earlier with the locking query, Hibernate will
                now execute a <code>SELECT</code> during flushing. It checks if the database
                version of each <code>ITEM</code> row is still the same as when it was loaded
                earlier. If any <code>ITEM</code> row has a different version, or the row doesn't
-               exist anymore, an <code>OptimisticLockException</code> will be thrown.
+               exist anymore, an <code>OptimisticEntityLockException</code> will be thrown.
              */
             tx.commit();
             em.close();
 
             assertEquals(totalPrice.toString(), "108.00");
         } catch (Exception ex) {
-            throw unwrapCauseOfType(ex, org.hibernate.OptimisticLockException.class);
+            throw unwrapCauseOfType(ex, OptimisticEntityLockException.class);
         } finally {
             TM.rollback();
         }
     }
 
-    // TODO This throws the wrong exception!
-    //@Test(expectedExceptions = OptimisticLockException.class)
+    // What's thrown will be BitronixRollbackException wrapped from org.hibernate.StaleObjectStateException.
+    // Below, we will catch and call unwrapCauseOfType().
     @Test(expectedExceptions = org.hibernate.StaleObjectStateException.class)
     public void forceIncrement() throws Throwable {
         final TestData testData = storeItemAndBids();

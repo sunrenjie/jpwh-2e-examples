@@ -1,6 +1,7 @@
 package org.jpwh.test.querying.sql;
 
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.AliasToBeanConstructorResultTransformer;
 import org.hibernate.type.StandardBasicTypes;
 import org.jpwh.model.querying.Bid;
@@ -33,12 +34,13 @@ public class HibernateSQLQueries extends QueryingTest {
 
             {
                 // Simple SQL projection
-                org.hibernate.SQLQuery query = session.createSQLQuery(
+                org.hibernate.query.Query<?> query = session.createNativeQuery(
                     "select NAME, AUCTIONEND from {h-schema}ITEM"
                 );
-                List<Object[]> result = query.list();
-
-                for (Object[] tuple : result) {
+                List<?> result = query.list();
+                for (Object o : query.list()) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] tuple = (Object[]) o;
                     assertTrue(tuple[0] instanceof String);
                     assertTrue(tuple[1] instanceof Date);
                 }
@@ -47,11 +49,10 @@ public class HibernateSQLQueries extends QueryingTest {
             em.clear();
             {
                 // Automatic marshaling of resultset to mapped entity class
-                org.hibernate.SQLQuery query = session.createSQLQuery(
-                    "select * from ITEM"
-                );
-                query.addEntity(Item.class);
-
+                NativeQuery<Item> query = session.createNativeQuery("select * from ITEM", Item.class);
+                // Migration notes: after we've migrated from session.createSQLQuery() to session.createNativeQuery(xxx, Item.class),
+                // query.addEntity(Item.class) is no longer needed.
+                // This is figured out by ChatGPT !!!
                 List<Item> result = query.list();
                 assertEquals(result.size(), 3);
                 assertNotNull(result.get(0));
@@ -60,11 +61,8 @@ public class HibernateSQLQueries extends QueryingTest {
             {
                 // Positional parameter binding
                 Long ITEM_ID = testData.items.getFirstId();
-                org.hibernate.SQLQuery query = session.createSQLQuery(
-                    "select * from ITEM where ID = ?"
-                );
-                query.addEntity(Item.class);
-                query.setParameter(0, ITEM_ID); // Starts at zero!
+                NativeQuery<Item> query = session.createNativeQuery("select * from ITEM where ID = ?", Item.class);
+                query.setParameter(1, ITEM_ID); // Note the start pos!!!
 
                 List<Item> result = query.list();
                 assertEquals(result.size(), 1);
@@ -74,10 +72,7 @@ public class HibernateSQLQueries extends QueryingTest {
             {
                 // Named parameter binding
                 Long ITEM_ID = testData.items.getFirstId();
-                org.hibernate.SQLQuery query = session.createSQLQuery(
-                    "select * from ITEM where ID = :id"
-                );
-                query.addEntity(Item.class);
+                NativeQuery<Item> query = session.createNativeQuery("select * from ITEM where ID = :id", Item.class);
                 query.setParameter("id", ITEM_ID);
 
                 List<Item> result = query.list();

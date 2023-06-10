@@ -83,10 +83,10 @@ public enum DatabaseProduct {
                     "url",
                     connectionURL != null
                         ? connectionURL :
-                        "jdbc:mysql://localhost/test?sessionVariables=sql_mode='PIPES_AS_CONCAT'"
+                        "jdbc:mysql://localhost/jpwh_2e_examples?sessionVariables=sql_mode='PIPES_AS_CONCAT'"
                 );
 
-                ds.getDriverProperties().put("driverClassName", "com.mysql.jdbc.Driver");
+                ds.getDriverProperties().put("driverClassName", "com.mysql.cj.jdbc.Driver");
             }
         },
         // Yes, this should work with 5.6, no idea why Gail named it 5.7

@@ -8,7 +8,7 @@ This doc tries to describe the project (sample code for the book Java Persistenc
 
 Out of respect to the original authors, we leave the original `README.md` untouched.
 
-### Overview, arch design
+### How to setup and run it
 
 #### Environment, core dependencies
 
@@ -34,9 +34,23 @@ Add the JVM options:
 -Ddatabase=mysql -DconnectionURL=jdbc:mysql://jpwh_2e_examples:MyNewPass4!@localhost/jpwh_2e_examples
 ```
 
-#### This project uses JTA and not Spring
+For IntelliJ IDEA, just add it to the TestNG template.
 
-Fortunately, it still works.
+For command line, use it:
+
+```
+# maven-surefire-plugin unit tests
+mvn test -DsurefireArgLine="-Ddatabase=mysql -DconnectionURL=jdbc:mysql://xxx"
+
+# maven-failsafe-plugin integration tests
+mvn verify -DargLine="-Ddatabase=mysql -DconnectionURL=jdbc:mysql://xxx"
+```
+
+### Architecture notes
+
+#### It uses BTM JTA and no Spring stuff
+
+Fortunately, btm still works, after so many years.
 
 Why JTA is not very hot these days?
 
@@ -57,6 +71,63 @@ Answer by Bard:
 - **Performance overhead.** JTA can add some performance overhead to applications.
 - **Not always necessary.** JTA is not always necessary for applications. If an application only uses a single resource, then JTA is not needed.
 
+#### hibernate-ehcache is deprecated
+
+Port hibernate-ehcache to the new caching SPI, but deprecate https://hibernate.atlassian.net/browse/HHH-12441
+
+```
+Deprecate hibernate-ehcache module as it is using Ehcache 2 as its back-end, which is deprecated itself in favor of Ehcache 3.  Ehcache 3 can be easily used instead by using the hibernate-jcache module and have Ehcache 3 (which is a JCache implementor) properly registered with JCache.
+```
+
 ### Non-trivial changes from the original code
 
 #### Dependency updates
+
+#### Hibernate: 2nd level statistics API changes
+
+Known breaking changes:
+
+* getElementCountInMemory() will always return NO_EXTENDED_STAT_SUPPORT_RETURN, because no cache providers implement ExtendedStatisticsSupport.
+
+#### Criteria API to call h2 DATE_DIFF
+
+Syntax error as also reported in:
+
+https://stackoverflow.com/questions/60589903/issue-with-h2-datediff-function-using-criteria-api
+
+```
+It completes without any issue. Moreover if I switch version of H2 to 1.3.171, Criteria API works fine. I use the following versions of H2 and Hibernate 1.4.200, 5.4.8.Final accordingly. Could somebody help with this?
+```
+
+We've bisect the releases, to find out the last good release is version-1.4.198, and oldest bad is version-1.4.199.
+
+Examined the commit history, bisect to find the first commit that breaks it:
+
+```
+$ git bisect start
+status: waiting for both good and bad commits
+
+$ git bisect good version-1.4.198
+status: waiting for bad commit, 1 good commit known
+
+$ git bisect bad version-1.4.199
+Bisecting: 68 revisions left to test after this (roughly 6 steps)
+[2cc2aac4707198390a21e981baa3ee75931a586e] Merge pull request #1790 from katzyn/trim
+
+...
+
+$ git bisect bad
+5a6cec1dbfc56f5750c90cc6ab3556bcca00aed3 is the first bad commit
+commit 5a6cec1dbfc56f5750c90cc6ab3556bcca00aed3
+Author: Evgenij Ryazanov <katzyn@gmail.com>
+Date:   Wed Mar 6 21:02:33 2019 +0800
+
+    Don't try to parse expressions as date part argument of DATE_ADD and DATE_DIFF
+
+ h2/src/docsrc/help/help.csv            |  2 +-
+ h2/src/main/org/h2/command/Parser.java | 13 +++++--------
+ 2 files changed, 6 insertions(+), 9 deletions(-)
+ 
+$ git bisect reset
+```
+

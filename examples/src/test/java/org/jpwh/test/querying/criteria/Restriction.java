@@ -18,6 +18,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -363,7 +364,13 @@ public class Restriction extends QueryingTest {
 
             { // Calling arbitrary functions
 
-                CriteriaQuery criteria = cb.createQuery();
+                // Unfortunately, the below usage of JPA Criteria API produces exception in h2 (current version is 2.1.214):
+                // org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement; expected "date-time field"; SQL statement
+                // In fact, since the commit 5a6cec1dbfc56f5750c90cc6ab3556bcca00aed3 (between 1.4.198 and 1.4.199),
+                // it is broken until the latest release. Before we could find a solution, we have to replace it with
+                // the below native SQL version.
+                /*
+                CriteriaQuery<Item> criteria = cb.createQuery(Item.class);
                 Root<Item> i = criteria.from(Item.class);
                 criteria.select(i).where(
                     cb.gt(
@@ -377,8 +384,12 @@ public class Restriction extends QueryingTest {
                         1
                     )
                 );
-
                 Query q = em.createQuery(criteria);
+                 */
+
+                // The native query version translated from the above JPA Criteria API as suggested by ChatGPT.
+                String sql = "SELECT * FROM Item WHERE DATEDIFF('DAY', createdOn, auctionEnd) > 1";
+                Query q = em.createNativeQuery(sql, Item.class);
                 assertEquals(q.getResultList().size(), 1);
             }
             tx.commit();

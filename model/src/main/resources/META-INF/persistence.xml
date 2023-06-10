@@ -873,7 +873,6 @@
 
     <persistence-unit name="CachePU">
         <jta-data-source>myDS</jta-data-source>
-        <class>org.jpwh.model</class>
         <class>org.jpwh.model.cache.Item</class>
         <class>org.jpwh.model.cache.Bid</class>
         <class>org.jpwh.model.cache.User</class>

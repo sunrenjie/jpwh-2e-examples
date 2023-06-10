@@ -47,7 +47,7 @@ public class CreateExecuteQueries extends QueryingTest {
                 // Also available on EntityManagerFactory:
                 // CriteriaBuilder cb = entityManagerFactory.getCriteriaBuilder();
 
-                CriteriaQuery criteria = cb.createQuery();
+                CriteriaQuery<Item> criteria = cb.createQuery(Item.class);
                 criteria.select(criteria.from(Item.class));
 
                 Query query = em.createQuery(criteria);
@@ -131,7 +131,7 @@ public class CreateExecuteQueries extends QueryingTest {
 
             {
                 Session session = em.unwrap(Session.class);
-                org.hibernate.Query query = session.createQuery("select i from Item i");
+                org.hibernate.query.Query<?> query = session.createQuery("select i from Item i");
                 // Proprietary API: query.setResultTransformer(...);
 
                 assertEquals(query.list().size(), 3);
@@ -139,7 +139,7 @@ public class CreateExecuteQueries extends QueryingTest {
             {
                 Session session = em.unwrap(Session.class);
 
-                org.hibernate.SQLQuery query = session.createSQLQuery(
+                org.hibernate.query.Query<?> query = session.createNativeQuery(
                     "select {i.*} from ITEM {i}"
                 ).addEntity("i", Item.class);
 
@@ -148,6 +148,8 @@ public class CreateExecuteQueries extends QueryingTest {
             {
                 Session session = em.unwrap(Session.class);
 
+                // Code below is kept as is, even if #createCriteria() is marked as deprecated in favor of JPA Criteria.
+                // This test case is for this deprecated feature per se.
                 org.hibernate.Criteria query = session.createCriteria(Item.class);
                 query.add(org.hibernate.criterion.Restrictions.eq("id", ITEM_ID));
 
@@ -161,10 +163,7 @@ public class CreateExecuteQueries extends QueryingTest {
                     "select i from Item i"
                 );
 
-                org.hibernate.Query hibernateQuery =
-                    query.unwrap(org.hibernate.jpa.HibernateQuery.class)
-                        .getHibernateQuery();
-
+                org.hibernate.query.Query<?> hibernateQuery = query.unwrap(org.hibernate.query.Query.class);
                 hibernateQuery.getQueryString();
                 hibernateQuery.getReturnAliases();
                 // ... other proprietary API calls
@@ -515,7 +514,7 @@ public class CreateExecuteQueries extends QueryingTest {
                 assertEquals(result.getId(), ITEM_ID);
             }
             {
-                org.hibernate.Query query = session.getNamedQuery("findItems");
+                org.hibernate.query.Query query = session.getNamedQuery("findItems");
 
                 assertEquals(query.list().size(), 3);
             }

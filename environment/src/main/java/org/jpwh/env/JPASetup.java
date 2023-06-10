@@ -1,5 +1,6 @@
 package org.jpwh.env;
 
+import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.internal.util.StringHelper;
 
 import javax.persistence.EntityManager;
@@ -39,30 +40,23 @@ public class JPASetup {
         if (hbmResources != null) {
             Collections.addAll(ls, hbmResources);
         }
-        properties.put(
-            "hibernate.hbmxml.files",
-            StringHelper.join(",", ls.iterator())
-        );
 
         // We don't want to repeat these settings for all units in persistence.xml, so
         // they are set here programmatically
-        properties.put(
-            "hibernate.format_sql",
-            "true"
-        );
-        properties.put(
-            "hibernate.use_sql_comments",
-            "true"
-        );
+        properties.put("hibernate.hbmxml.files", StringHelper.join(",", ls.iterator()));
+        properties.put("hibernate.format_sql", "true");
+        properties.put("hibernate.use_sql_comments", "true");
+        // Takes effect at {@link HibernateSchemaManagementTool#getSchemaCreator() }.
+        // See https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html#configurations-hbmddl
+        // Don't use hibernate.hbm2ddl.auto value. Seen from source code,
+        // the entire hbm2ddl tool and package org.hibernate.tool.hbm2ddl are deprecated.
+        // Note: only enable it in dev env !!!
+        properties.put(AvailableSettings.HBM2DDL_DATABASE_ACTION, "drop-and-create");
 
         // Select database SQL dialect
-        properties.put(
-            "hibernate.dialect",
-            databaseProduct.hibernateDialect
-        );
+        properties.put("hibernate.dialect", databaseProduct.hibernateDialect);
 
-        entityManagerFactory =
-            Persistence.createEntityManagerFactory(getPersistenceUnitName(), properties);
+        entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnitName(), properties);
     }
 
     public String getPersistenceUnitName() {

@@ -2,7 +2,9 @@ package org.jpwh.test.cache;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.stat.CacheRegionStatistics;
 import org.hibernate.stat.NaturalIdCacheStatistics;
+import org.hibernate.stat.NaturalIdStatistics;
 import org.hibernate.stat.QueryStatistics;
 import org.hibernate.stat.SecondLevelCacheStatistics;
 import org.hibernate.stat.Statistics;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static org.hibernate.stat.CacheRegionStatistics.NO_EXTENDED_STAT_SUPPORT_RETURN;
 import static org.testng.Assert.*;
 
 public class SecondLevel extends JPATest {
@@ -145,9 +148,12 @@ public class SecondLevel extends JPATest {
                         .unwrap(SessionFactory.class)
                         .getStatistics();
 
-                SecondLevelCacheStatistics itemCacheStats =
-                    stats.getSecondLevelCacheStatistics(Item.class.getName());
-                assertEquals(itemCacheStats.getElementCountInMemory(), 3);
+                CacheRegionStatistics itemCacheStats = stats.getDomainDataRegionStatistics(Item.class.getName());
+                // TODO itemCacheStats.getElementCountInMemory() will always return NO_EXTENDED_STAT_SUPPORT_RETURN,
+                //   meaning it is not supported. No known cache provider implements ExtendedStatisticsSupport.
+                // The breaking changes are introduced at https://hibernate.atlassian.net/browse/HHH-11356
+                // Migration guide: https://github.com/hibernate/hibernate-orm/blob/5.3/migration-guide.adoc#second-level-cache-provider-spi-changes
+                assertEquals(itemCacheStats.getElementCountInMemory(), NO_EXTENDED_STAT_SUPPORT_RETURN);
                 assertEquals(itemCacheStats.getHitCount(), 0);
 
                 // Hit the second-level cache with entity lookup by identifier
@@ -155,9 +161,7 @@ public class SecondLevel extends JPATest {
                 assertEquals(itemCacheStats.getHitCount(), 1);
 
                 // Initializing a proxy will also hit the second-level cache
-                SecondLevelCacheStatistics userCacheStats =
-                    stats.getSecondLevelCacheStatistics(User.class.getName());
-                assertEquals(userCacheStats.getElementCountInMemory(), 3);
+                CacheRegionStatistics userCacheStats = stats.getDomainDataRegionStatistics(User.class.getName());
                 assertEquals(userCacheStats.getHitCount(), 0);
 
                 User seller = item.getSeller();
@@ -171,18 +175,14 @@ public class SecondLevel extends JPATest {
                    collections in the cache (one for each <code>Item</code>). No
                    successful cache lookups have occurred so far.
                  */
-                SecondLevelCacheStatistics bidsCacheStats =
-                    stats.getSecondLevelCacheStatistics(Item.class.getName() + ".bids");
-                assertEquals(bidsCacheStats.getElementCountInMemory(), 3);
+                CacheRegionStatistics bidsCacheStats = stats.getDomainDataRegionStatistics(Item.class.getName() + ".bids");
                 assertEquals(bidsCacheStats.getHitCount(), 0);
 
                 /* 
                    The entity cache of <code>Bid</code> has five records, and you
                    haven't accessed it either.
                  */
-                SecondLevelCacheStatistics bidCacheStats =
-                    stats.getSecondLevelCacheStatistics(Bid.class.getName());
-                assertEquals(bidCacheStats.getElementCountInMemory(), 5);
+                CacheRegionStatistics bidCacheStats = stats.getDomainDataRegionStatistics(Bid.class.getName());
                 assertEquals(bidCacheStats.getHitCount(), 0);
 
                 /* 
@@ -225,8 +225,7 @@ public class SecondLevel extends JPATest {
                         .unwrap(SessionFactory.class)
                         .getStatistics();
 
-                SecondLevelCacheStatistics itemCacheStats =
-                    stats.getSecondLevelCacheStatistics(Item.class.getName());
+                CacheRegionStatistics itemCacheStats = stats.getDomainDataRegionStatistics(Item.class.getName());
 
                 // Bypass the cache when retrieving an entity instance by identifier
                 {
@@ -237,7 +236,6 @@ public class SecondLevel extends JPATest {
                 }
 
                 // Bypass the cache when storing an entity instance
-                assertEquals(itemCacheStats.getElementCountInMemory(), 3);
                 em.setProperty("javax.persistence.cache.storeMode", CacheStoreMode.BYPASS);
 
                 Item item = new Item(
@@ -250,7 +248,6 @@ public class SecondLevel extends JPATest {
                 em.persist(item); // Not stored in the cache
 
                 em.flush();
-                assertEquals(itemCacheStats.getElementCountInMemory(), 3); // Unchanged
 
                 tx.commit();
                 em.close();
@@ -288,10 +285,8 @@ public class SecondLevel extends JPATest {
                 EntityManager em = JPA.createEntityManager();
                 Session session = em.unwrap(Session.class);
 
-                NaturalIdCacheStatistics userIdStats =
-                    stats.getNaturalIdCacheStatistics(User.class.getName() + "##NaturalId");
-
-                assertEquals(userIdStats.getElementCountInMemory(), 0);
+                // NaturalIdCacheStatistics userIdStats = stats.getNaturalIdCacheStatistics(User.class.getName() + "##NaturalId");
+                NaturalIdStatistics userIdStats = stats.getNaturalIdStatistics(User.class.getName());
 
                 User user = (User) session.byNaturalId(User.class)
                     .using("username", "johndoe")
@@ -301,15 +296,19 @@ public class SecondLevel extends JPATest {
 
                 assertNotNull(user);
 
-                assertEquals(userIdStats.getHitCount(), 0);
-                assertEquals(userIdStats.getMissCount(), 1);
-                assertEquals(userIdStats.getElementCountInMemory(), 1);
+                assertEquals(userIdStats.getCacheHitCount(), 0);
+                assertEquals(userIdStats.getCacheMissCount(), 1);
 
-                SecondLevelCacheStatistics userStats =
-                    stats.getSecondLevelCacheStatistics(User.class.getName());
+                // A natural id query using username will cause cache miss into StatisticsImpl#entityCacheMiss(),
+                // while a "general" query using ID will cause cache miss into StatisticsImpl#naturalIdCacheMiss().
+                // This seems to be a fundamental break from the original code, reflecting fundamental changes to the
+                // hibernate framework (seems like a clean up; now statistics for the two types of queries are handled
+                // independently, among others).
+                User user2 = session.get(User.class, 2L);
+
+                CacheRegionStatistics userStats = stats.getDomainDataRegionStatistics(User.class.getName());
                 assertEquals(userStats.getHitCount(), 0);
                 assertEquals(userStats.getMissCount(), 1);
-                assertEquals(userStats.getElementCountInMemory(), 1);
 
                 tx.commit();
                 em.close();
@@ -326,7 +325,6 @@ public class SecondLevel extends JPATest {
                  */
                 NaturalIdCacheStatistics userIdStats =
                     stats.getNaturalIdCacheStatistics(User.class.getName() + "##NaturalId");
-                assertEquals(userIdStats.getElementCountInMemory(), 1);
 
                 /* 
                    The <code>org.hibernate.Session</code> API performs natural
@@ -435,14 +433,6 @@ public class SecondLevel extends JPATest {
                 assertEquals(queryStats.getCacheHitCount(), 0);
                 assertEquals(queryStats.getCacheMissCount(), 1);
                 assertEquals(queryStats.getCachePutCount(), 1);
-
-                /* 
-                   The actual entity instance data retrieved in the result set is
-                   stored in the entity cache region, not in the query result cache.
-                 */
-                SecondLevelCacheStatistics itemCacheStats =
-                    stats.getSecondLevelCacheStatistics(Item.class.getName());
-                assertEquals(itemCacheStats.getElementCountInMemory(), 3);
 
                 tx.commit();
                 em.close();
