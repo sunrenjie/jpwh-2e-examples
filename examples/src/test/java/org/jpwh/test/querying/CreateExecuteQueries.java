@@ -329,8 +329,7 @@ public class CreateExecuteQueries extends QueryingTest {
                 /* 
                    Unwrap the Hibernate API to use scrollable cursors.
                  */
-                org.hibernate.Query hibernateQuery =
-                    query.unwrap(org.hibernate.jpa.HibernateQuery.class).getHibernateQuery();
+                org.hibernate.query.Query<?> hibernateQuery = query.unwrap(org.hibernate.query.Query.class);
 
                 /* 
                    Execute the query with a database cursor; this does not retrieve the

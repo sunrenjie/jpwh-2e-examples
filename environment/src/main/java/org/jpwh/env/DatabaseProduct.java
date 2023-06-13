@@ -89,8 +89,12 @@ public enum DatabaseProduct {
                 ds.getDriverProperties().put("driverClassName", "com.mysql.cj.jdbc.Driver");
             }
         },
-        // Yes, this should work with 5.6, no idea why Gail named it 5.7
-        org.hibernate.dialect.MySQL57InnoDBDialect.class.getName()
+        // While we use MySQL8Dialect nevertheless, JPASetup constructor will leave hibernate.dialect undefined for
+        // MySQL to leave it to runtime detection. This approach is ugly but has these benefits:
+        // 1) the best dialect is always chosen at runtime
+        // 2) no need to define one MYSQL enum value here for each MYSQL dialect that's available
+        // 2) no need to re-design the DatabaseProduct, which is simple yet elegant
+        org.hibernate.dialect.MySQL8Dialect.class.getName()
     );
 
     public DataSourceConfiguration configuration;

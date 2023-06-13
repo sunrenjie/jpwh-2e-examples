@@ -114,7 +114,8 @@ public class FetchLoadGraph extends JPATest {
                 Item item = em.find(Item.class, ITEM_ID, properties);
                 // select * from ITEM where ID = ?
 
-                assertTrue(persistenceUtil.isLoaded(item));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(item));
                 assertTrue(persistenceUtil.isLoaded(item, "name"));
                 assertTrue(persistenceUtil.isLoaded(item, "auctionEnd"));
                 assertFalse(persistenceUtil.isLoaded(item, "seller"));
@@ -139,7 +140,8 @@ public class FetchLoadGraph extends JPATest {
 
                 Item item = em.find(Item.class, ITEM_ID, properties);
 
-                assertTrue(persistenceUtil.isLoaded(item));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(item));
                 assertTrue(persistenceUtil.isLoaded(item, "name"));
                 assertTrue(persistenceUtil.isLoaded(item, "auctionEnd"));
                 assertFalse(persistenceUtil.isLoaded(item, "seller"));
@@ -177,7 +179,8 @@ public class FetchLoadGraph extends JPATest {
                 //   inner join USERS u on u.ID = i.SELLER_ID
                 // where i.ID = ?
 
-                assertTrue(persistenceUtil.isLoaded(item));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(item));
                 assertTrue(persistenceUtil.isLoaded(item, "name"));
                 assertTrue(persistenceUtil.isLoaded(item, "auctionEnd"));
                 assertTrue(persistenceUtil.isLoaded(item, "seller"));
@@ -207,7 +210,8 @@ public class FetchLoadGraph extends JPATest {
                 //   inner join USERS u on u.ID = i.SELLER_ID
                 // where i.ID = ?
 
-                assertTrue(persistenceUtil.isLoaded(item));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(item));
                 assertTrue(persistenceUtil.isLoaded(item, "name"));
                 assertTrue(persistenceUtil.isLoaded(item, "auctionEnd"));
                 assertTrue(persistenceUtil.isLoaded(item, "seller"));
@@ -239,7 +243,8 @@ public class FetchLoadGraph extends JPATest {
                 assertEquals(items.size(), 3);
 
                 for (Item item : items) {
-                    assertTrue(persistenceUtil.isLoaded(item));
+                    // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                    assertFalse(persistenceUtil.isLoaded(item));
                     assertTrue(persistenceUtil.isLoaded(item, "name"));
                     assertTrue(persistenceUtil.isLoaded(item, "auctionEnd"));
                     assertTrue(persistenceUtil.isLoaded(item, "seller"));
@@ -277,7 +282,8 @@ public class FetchLoadGraph extends JPATest {
                 assertTrue(persistenceUtil.isLoaded(bid));
                 assertTrue(persistenceUtil.isLoaded(bid, "amount"));
                 assertTrue(persistenceUtil.isLoaded(bid, "bidder"));
-                assertTrue(persistenceUtil.isLoaded(bid, "item"));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(bid, "item"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem(), "name"));
                 assertFalse(persistenceUtil.isLoaded(bid.getItem(), "seller"));
 
@@ -304,7 +310,8 @@ public class FetchLoadGraph extends JPATest {
                 assertTrue(persistenceUtil.isLoaded(bid));
                 assertTrue(persistenceUtil.isLoaded(bid, "amount"));
                 assertTrue(persistenceUtil.isLoaded(bid, "bidder"));
-                assertTrue(persistenceUtil.isLoaded(bid, "item"));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(bid, "item"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem(), "name"));
                 assertFalse(persistenceUtil.isLoaded(bid.getItem(), "seller"));
 
@@ -339,7 +346,8 @@ public class FetchLoadGraph extends JPATest {
                 assertTrue(persistenceUtil.isLoaded(bid));
                 assertTrue(persistenceUtil.isLoaded(bid, "amount"));
                 assertTrue(persistenceUtil.isLoaded(bid, "bidder"));
-                assertTrue(persistenceUtil.isLoaded(bid, "item"));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(bid, "item"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem(), "name"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem(), "seller"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem().getSeller(), "username"));
@@ -370,7 +378,8 @@ public class FetchLoadGraph extends JPATest {
                 assertTrue(persistenceUtil.isLoaded(bid));
                 assertTrue(persistenceUtil.isLoaded(bid, "amount"));
                 assertTrue(persistenceUtil.isLoaded(bid, "bidder"));
-                assertTrue(persistenceUtil.isLoaded(bid, "item"));
+                // The Item model has lazy fields, so PersistenceUtilHelper#isInitialized() thinks is it not loaded.
+                assertFalse(persistenceUtil.isLoaded(bid, "item"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem(), "name"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem(), "seller"));
                 assertTrue(persistenceUtil.isLoaded(bid.getItem().getSeller(), "username"));

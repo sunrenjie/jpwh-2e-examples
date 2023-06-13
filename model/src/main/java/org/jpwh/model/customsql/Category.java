@@ -21,7 +21,7 @@ public class Category {
     protected String name;
 
     @OneToMany(mappedBy = "category")
-    @org.hibernate.annotations.Where(clause = "ACTIVE = 'true'")
+    @org.hibernate.annotations.Where(clause = "ACTIVE = true")
     protected Set<Item> items = new HashSet<Item>();
 
     public Category() {

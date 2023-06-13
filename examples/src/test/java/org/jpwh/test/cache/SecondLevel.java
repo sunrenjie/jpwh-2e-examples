@@ -275,7 +275,7 @@ public class SecondLevel extends JPATest {
             // Clear all natural ID cache regions
             JPA.getEntityManagerFactory().getCache()
                 .unwrap(org.hibernate.Cache.class)
-                .evictNaturalIdRegions();
+                .evictNaturalIdData();
 
             // Clear the User entity cache region
             JPA.getEntityManagerFactory().getCache().evict(User.class);
@@ -285,6 +285,7 @@ public class SecondLevel extends JPATest {
                 EntityManager em = JPA.createEntityManager();
                 Session session = em.unwrap(Session.class);
 
+                // This retrieval of userIdStats is upgraded from usage of deprecated API:
                 // NaturalIdCacheStatistics userIdStats = stats.getNaturalIdCacheStatistics(User.class.getName() + "##NaturalId");
                 NaturalIdStatistics userIdStats = stats.getNaturalIdStatistics(User.class.getName());
 
@@ -323,8 +324,7 @@ public class SecondLevel extends JPATest {
                    The natural identifier cache region for <code>User</code>s
                    has one element.
                  */
-                NaturalIdCacheStatistics userIdStats =
-                    stats.getNaturalIdCacheStatistics(User.class.getName() + "##NaturalId");
+                NaturalIdStatistics userIdStats = stats.getNaturalIdStatistics(User.class.getName());
 
                 /* 
                    The <code>org.hibernate.Session</code> API performs natural
@@ -341,14 +341,13 @@ public class SecondLevel extends JPATest {
                    You had a cache hit for the natural identifier lookup; the
                    cache returned the identifier value of "johndoe".
                  */
-                assertEquals(userIdStats.getHitCount(), 1);
+                assertEquals(userIdStats.getCacheHitCount(), 1);
 
                 /* 
                    You also had a cache hit for the actual entity data of
                    that <code>User</code>.
                  */
-                SecondLevelCacheStatistics userStats =
-                    stats.getSecondLevelCacheStatistics(User.class.getName());
+                CacheRegionStatistics userStats = stats.getDomainDataRegionStatistics(User.class.getName());
                 assertEquals(userStats.getHitCount(), 1);
 
                 tx.commit();
@@ -378,9 +377,9 @@ public class SecondLevel extends JPATest {
             cache.unwrap(org.hibernate.Cache.class);
 
         assertFalse(hibernateCache.containsEntity(Item.class, ITEM_ID));
-        hibernateCache.evictEntityRegions();
-        hibernateCache.evictCollectionRegions();
-        hibernateCache.evictNaturalIdRegions();
+        hibernateCache.evictEntityData();
+        hibernateCache.evictCollectionData();
+        hibernateCache.evictNaturalIdData();
         hibernateCache.evictQueryRegions();
     }
 
@@ -412,14 +411,10 @@ public class SecondLevel extends JPATest {
                    the <code>org.hibernate.cachable</code> hint, the
                    result won't be stored in the query result cache.
                  */
-                Query query = em.createQuery(queryString)
+                List<Item> items = em.createQuery(queryString, Item.class)
                     .setParameter("n", "I%")
-                    .setHint("org.hibernate.cacheable", true);
-
-                /* 
-                   Hibernate will now execute the SQL query and retrieve the
-                   result set into memory.                 */
-                List<Item> items = query.getResultList();
+                    .setHint("org.hibernate.cacheable", true)
+                    .getResultList();
                 assertEquals(items.size(), 3);
 
                 /* 
@@ -444,7 +439,7 @@ public class SecondLevel extends JPATest {
 
                 String queryString = "select i from Item i where i.name like :n";
 
-                List<Item> items = em.createQuery(queryString)
+                List<Item> items = em.createQuery(queryString, Item.class)
                     .setParameter("n", "I%")
                     .setHint("org.hibernate.cacheable", true)
                     .getResultList();

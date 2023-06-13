@@ -19,7 +19,7 @@ import static org.testng.Assert.*;
 
 public class NativeQueries extends QueryingTest {
 
-    @Test
+    @Test(groups = {"H2"})
     public void executeQueries() throws Exception {
         TestDataCategoriesItems testData = storeTestData();
 

@@ -25,9 +25,11 @@ public class Grouping extends QueryingTest {
 
             {
                 Query q = em.createNamedQuery("group");
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 2);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof String);
                     assertTrue(row[1] instanceof Long);
                 }
@@ -35,9 +37,11 @@ public class Grouping extends QueryingTest {
             em.clear();
             {
                 Query q = em.createNamedQuery("average");
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 2);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof String);
                     assertTrue(row[1] instanceof Double);
                 }
@@ -45,9 +49,11 @@ public class Grouping extends QueryingTest {
             em.clear();
             {
                 Query q = em.createNamedQuery("averageWorkaround");
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 2);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof Item);
                     assertTrue(row[1] instanceof Double);
                 }
@@ -55,9 +61,11 @@ public class Grouping extends QueryingTest {
             em.clear();
             {
                 Query q = em.createNamedQuery("having");
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 1);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof String);
                     assertTrue(row[1] instanceof Long);
                 }

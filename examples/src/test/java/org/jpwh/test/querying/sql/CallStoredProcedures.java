@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.testng.Assert.*;
 
-@Test(groups = "MYSQL")
+@Test
 public class CallStoredProcedures extends QueryingTest {
 
     @Test(groups = "MYSQL")

@@ -11,7 +11,8 @@
         <drop>
             drop procedure FIND_ITEMS
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
     <database-object>
@@ -26,7 +27,8 @@
         <drop>
             drop procedure APPROVE_ITEMS
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
     <database-object>
@@ -41,7 +43,8 @@
         <drop>
             drop procedure FIND_ITEM_TOTAL
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
     <database-object>
@@ -55,7 +58,8 @@
         <drop>
             drop procedure UPDATE_ITEM
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
     <database-object>

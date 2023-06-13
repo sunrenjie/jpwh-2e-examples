@@ -35,7 +35,8 @@ public class DatabaseTestMethodSelector implements IMethodSelector {
 
     protected boolean contains(String[] strings, String s) {
         for (String string : strings) {
-            if (string.equals(s))
+            // Shall tolerate the case differences like between MySQL, MYSQL, mysql, etc.
+            if (string.equalsIgnoreCase(s))
                 return true;
         }
         return false;

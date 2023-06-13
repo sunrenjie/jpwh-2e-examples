@@ -1,6 +1,7 @@
 package org.jpwh.test.filtering;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.jpwh.env.JPATest;
 import org.jpwh.model.filtering.interceptor.AuditLogRecord;
@@ -42,55 +43,58 @@ public class AuditLogging extends JPATest {
             }
 
             EntityManagerFactory emf = JPA.getEntityManagerFactory();
+            // The previous approach to use JPA EntityManager does not work with property value
+            //   org.hibernate.jpa.AvailableSettings.SESSION_INTERCEPTOR or
+            //   org.hibernate.cfg.AvailableSettings.SESSION_SCOPED_INTERCEPTOR:
+            // EntityManager em = emf.createEntityManager(properties);
+            // With this, the interceptor for em will still be the default EmptyInterceptor.
+            // So we are forced to switch to Hibernate API around Session interface, as suggested in the official doc:
+            // https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html#events-interceptors
+            SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
+            Session session = sessionFactory
+                    .withOptions()
+                    .interceptor(new AuditLogInterceptor())
+                    .openSession();
 
-            Map<String, String> properties = new HashMap<String, String>();
-            properties.put(
-                org.hibernate.jpa.AvailableSettings.SESSION_INTERCEPTOR,
-                AuditLogInterceptor.class.getName()
-            );
-
-            EntityManager em = emf.createEntityManager(properties);
-
-            Session session = em.unwrap(Session.class);
-            AuditLogInterceptor interceptor =
-                (AuditLogInterceptor) ((SessionImplementor) session).getInterceptor();
+            // Manually fetch and configure the interceptor later, such that it is separated from its creation.
+            AuditLogInterceptor interceptor = (AuditLogInterceptor) ((SessionImplementor) session).getInterceptor();
             interceptor.setCurrentSession(session);
             interceptor.setCurrentUserId(CURRENT_USER_ID);
 
             tx.begin();
-            em.joinTransaction();
+            session.joinTransaction();
             Item item = new Item("Foo");
-            em.persist(item);
+            session.persist(item);
             tx.commit();
-            em.clear();
+            session.clear();
 
             tx.begin();
-            em.joinTransaction();
-            List<AuditLogRecord> logs = em.createQuery(
-                "select lr from AuditLogRecord lr",
-                AuditLogRecord.class
+            session.joinTransaction();
+            List<AuditLogRecord> logs = session.createQuery(
+                    "select lr from AuditLogRecord lr",
+                    AuditLogRecord.class
             ).getResultList();
             assertEquals(logs.size(), 1);
             assertEquals(logs.get(0).getMessage(), "insert");
             assertEquals(logs.get(0).getEntityClass(), Item.class);
             assertEquals(logs.get(0).getEntityId(), item.getId());
             assertEquals(logs.get(0).getUserId(), CURRENT_USER_ID);
-            em.createQuery("delete AuditLogRecord").executeUpdate();
+            session.createQuery("delete AuditLogRecord").executeUpdate();
             tx.commit();
-            em.clear();
+            session.clear();
 
             tx.begin();
-            em.joinTransaction();
-            item = em.find(Item.class, item.getId());
+            session.joinTransaction();
+            item = session.find(Item.class, item.getId());
             item.setName("Bar");
             tx.commit();
-            em.clear();
+            session.clear();
 
             tx.begin();
-            em.joinTransaction();
-            logs = em.createQuery(
-                "select lr from AuditLogRecord lr",
-                AuditLogRecord.class
+            session.joinTransaction();
+            logs = session.createQuery(
+                    "select lr from AuditLogRecord lr",
+                    AuditLogRecord.class
             ).getResultList();
             assertEquals(logs.size(), 1);
             assertEquals(logs.get(0).getMessage(), "update");
@@ -98,7 +102,7 @@ public class AuditLogging extends JPATest {
             assertEquals(logs.get(0).getEntityId(), item.getId());
             assertEquals(logs.get(0).getUserId(), CURRENT_USER_ID);
             tx.commit();
-            em.close();
+            session.close();
 
         } finally {
             TM.rollback();

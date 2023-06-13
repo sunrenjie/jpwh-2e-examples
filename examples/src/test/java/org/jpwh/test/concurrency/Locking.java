@@ -134,11 +134,13 @@ public class Locking extends Versioning {
                                 if (TM.databaseProduct.equals(DatabaseProduct.POSTGRESQL)) {
                                     // A statement timeout on PostgreSQL doesn't produce a specific exception
                                     assertTrue(ex instanceof PersistenceException);
-                                } else if (TM.databaseProduct.equals(DatabaseProduct.MYSQL)) {
+                                } else if (TM.databaseProduct.equals(DatabaseProduct.MYSQL) ||
+                                        TM.databaseProduct.equals(DatabaseProduct.H2)) {
                                     // On MySQL we get a LockTimeoutException
+                                    // Same for H2 (tested on version 2.1.214); previously it was PessimisticLockException?
                                     assertTrue(ex instanceof LockTimeoutException);
                                 } else {
-                                    // On H2 and Oracle we get a PessimisticLockException
+                                    // For Oracle ?
                                     assertTrue(ex instanceof PessimisticLockException);
                                 }
                             }

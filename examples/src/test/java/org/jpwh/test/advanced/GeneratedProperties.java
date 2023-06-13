@@ -58,6 +58,9 @@ public class GeneratedProperties extends JPATest {
             EntityManager em = JPA.createEntityManager();
 
             Item item = em.find(Item.class, ITEM_ID);
+            // Update it once to get a newer lastModified.
+            item.setDescription("Updated description");
+            em.persist(item);
 
             assertNotNull(item.getCreatedOn());
 

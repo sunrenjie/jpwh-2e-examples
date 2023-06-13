@@ -370,9 +370,11 @@ public class SimpleTransitions extends JPATest {
             Item item = emA.find(Item.class, ITEM_ID);
 
             EntityManager emB = getDatabaseB().createEntityManager();
+            emA.detach(item); // to avoid `HibernateException: Illegal attempt to associate a ManagedEntity with two open persistence contexts` in replicate()
             emB.unwrap(Session.class)
                 .replicate(item, org.hibernate.ReplicationMode.LATEST_VERSION);
 
+            item = emA.merge(item); // re-attach
             tx.commit();
             emA.close();
             emB.close();

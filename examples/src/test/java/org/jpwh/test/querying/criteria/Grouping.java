@@ -35,7 +35,7 @@ public class Grouping extends QueryingTest {
 
             { // Group
 
-                CriteriaQuery criteria = cb.createQuery();
+                CriteriaQuery<?> criteria = cb.createQuery();
                 Root<User> u = criteria.from(User.class);
                 criteria.multiselect(
                     u.get("lastname"),
@@ -44,9 +44,11 @@ public class Grouping extends QueryingTest {
                 criteria.groupBy(u.get("lastname"));
 
                 Query q = em.createQuery(criteria);
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 2);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof String);
                     assertTrue(row[1] instanceof Long);
                 }
@@ -54,7 +56,7 @@ public class Grouping extends QueryingTest {
             em.clear();
             { // Average
 
-                CriteriaQuery criteria = cb.createQuery();
+                CriteriaQuery<?> criteria = cb.createQuery();
                 Root<Bid> b = criteria.from(Bid.class);
                 criteria.multiselect(
                     b.get("item").get("name"),
@@ -63,9 +65,11 @@ public class Grouping extends QueryingTest {
                 criteria.groupBy(b.get("item").get("name"));
 
                 Query q = em.createQuery(criteria);
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 2);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof String);
                     assertTrue(row[1] instanceof Double);
                 }
@@ -73,7 +77,7 @@ public class Grouping extends QueryingTest {
             em.clear();
             { // Average Workaround
 
-                CriteriaQuery criteria = cb.createQuery();
+                CriteriaQuery<?> criteria = cb.createQuery();
                 Root<Bid> b = criteria.from(Bid.class);
                 Join<Bid, Item> i = b.join("item");
                 criteria.multiselect(
@@ -87,9 +91,11 @@ public class Grouping extends QueryingTest {
                 );
 
                 Query q = em.createQuery(criteria);
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 2);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof Item);
                     assertTrue(row[1] instanceof Double);
                 }
@@ -97,7 +103,7 @@ public class Grouping extends QueryingTest {
             em.clear();
             {// Having
 
-                CriteriaQuery criteria = cb.createQuery();
+                CriteriaQuery<?> criteria = cb.createQuery();
                 Root<User> u = criteria.from(User.class);
                 criteria.multiselect(
                     u.get("lastname"),
@@ -107,9 +113,11 @@ public class Grouping extends QueryingTest {
                 criteria.having(cb.like(u.<String>get("lastname"), "D%"));
 
                 Query q = em.createQuery(criteria);
-                List<Object[]> result = q.getResultList();
+                List<?> result = q.getResultList();
                 assertEquals(result.size(), 1);
-                for (Object[] row : result) {
+                for (Object o : result) {
+                    assertTrue(o instanceof Object[]);
+                    Object[] row = (Object[]) o;
                     assertTrue(row[0] instanceof String);
                     assertTrue(row[1] instanceof Long);
                 }

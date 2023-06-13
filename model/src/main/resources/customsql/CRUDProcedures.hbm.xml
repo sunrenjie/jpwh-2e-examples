@@ -13,7 +13,8 @@
         <drop>
             drop procedure FIND_USER_BY_ID
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
 
@@ -30,7 +31,8 @@
         <drop>
             drop procedure INSERT_USER
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
     <database-object>
@@ -48,7 +50,8 @@
         <drop>
             drop procedure UPDATE_USER
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
     <database-object>
@@ -61,7 +64,8 @@
         <drop>
             drop procedure DELETE_USER
         </drop>
-        <dialect-scope name="org.hibernate.dialect.MySQL57InnoDBDialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL57Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.MySQL8Dialect"/>
     </database-object>
 
 </hibernate-mapping>

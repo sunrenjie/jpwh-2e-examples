@@ -10,6 +10,7 @@ import javax.transaction.UserTransaction;
 import java.math.BigDecimal;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
 
 public class DerivedProperties extends JPATest {
 
@@ -20,6 +21,9 @@ public class DerivedProperties extends JPATest {
 
     @Test
     public void storeLoadFormula() throws Exception {
+        // This test case makes use of database formula features that may not work in all databases.
+        // So while we try to make it work, such usage is not recommended: why don't write our domain logic in Java
+        // where portability is guaranteed and execution is removed from the db servers.
         long ITEM_ID = storeItemAndBids();
 
         UserTransaction tx = TM.getUserTransaction();

@@ -153,7 +153,7 @@ public class CustomSQL extends JPATest {
 
     // The "ACTIVE = 'true'" SQL restriction doesn't work on Oracle, they
     // still don't have a boolean datatype...
-    @Test(groups = {"H2", "POSTGRESQL"})
+    @Test(groups = {"H2", "POSTGRESQL", "MYSQL"})
     public void readRestrictedCollection() throws Exception {
         CustomSQLTestData testData = create();
         Long CATEGORY_ID = testData.categories.getFirstId();

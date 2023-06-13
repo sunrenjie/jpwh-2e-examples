@@ -28,13 +28,17 @@ References:
 
 #### Running tests with MySQL
 
-Add the JVM options:
+Add the JVM options, for example, to mvn test command line:
 
 ```
--Ddatabase=mysql -DconnectionURL=jdbc:mysql://jpwh_2e_examples:MyNewPass4!@localhost/jpwh_2e_examples
+mvn test -Ddatabase=MYSQL -DconnectionURL=jdbc:mysql://jpwh_2e_examples:MyNewPass4!@localhost/jpwh_2e_examples
 ```
 
-For IntelliJ IDEA, just add it to the TestNG template.
+* Test NG @Test groups attribute is a way to group tests, such that we could selectively run tests that belong to specific group(s).
+* Here we don't need to define a JVM arg `-Dgroups=MYSQL `, because it will be implied by the database arg. See DatabaseTestMethodSelector as defined as method-selector in AllTests.tng.xml.
+* If we define JVM arg `-Dtest=TestClassFoo`, tests belong to POSTGRESQL group will be run as well. Example: CallStoredProcedures#callReturningRefCursorNative().
+
+For IntelliJ IDEA, add it to the TestNG template.
 
 For command line, use it:
 
@@ -79,17 +83,56 @@ Port hibernate-ehcache to the new caching SPI, but deprecate https://hibernate.a
 Deprecate hibernate-ehcache module as it is using Ehcache 2 as its back-end, which is deprecated itself in favor of Ehcache 3.  Ehcache 3 can be easily used instead by using the hibernate-jcache module and have Ehcache 3 (which is a JCache implementor) properly registered with JCache.
 ```
 
-### Non-trivial changes from the original code
+### Problems, solutions and changes
+
+#### Intro
+
+Considerable unsolved problems in database and hibernate as an ORM have been left unsolved for years. We could not hope to solve them all. Just keep them here such that we won't be surprised by the same problems more than once.
 
 #### Dependency updates
 
-#### Hibernate: 2nd level statistics API changes
+#### [solved] Hibernate: 2nd level statistics API changes
 
 Known breaking changes:
 
 * getElementCountInMemory() will always return NO_EXTENDED_STAT_SUPPORT_RETURN, because no cache providers implement ExtendedStatisticsSupport.
 
-#### Criteria API to call h2 DATE_DIFF
+#### [workaround] JPA Criteria API to call H2 DATE_DIFF() broken on H2 >= version-1.4.199
+
+Test case: Restriction#executeQueriesWithFunctions().
+
+Current status: query via JPA Criteria API is replaced with native query via SQL, at least until this problem is solved.
+
+* But any solution shall involve modification to h2 and/or hibernate.
+
+* Not many people use hibernate with H2 in industry use. This problem and any potential solution (being as important and elegant as it can be) won't draw much attention.
+
+Phenomenon:
+
+```
+2023-06-09 16:13:47,477 DEBUG [main] o.hibernate.SQL o.h.e.j.s.SqlStatementLogger.logStatement():144 
+    /* select
+        generatedAlias0 
+    from
+        Item as generatedAlias0 
+    where
+        function('DATEDIFF', :param0, generatedAlias0.createdOn, generatedAlias0.auctionEnd)>1 */ select
+            item0_.id as id1_6_,
+            item0_.approved as approved2_6_,
+            item0_.auctionEnd as auctione3_6_,
+            item0_.auctionType as auctiont4_6_,
+            item0_.buyNowPrice as buynowpr5_6_,
+            item0_.createdOn as createdo6_6_,
+            item0_.name as name7_6_,
+            item0_.seller_id as seller_i8_6_ 
+        from
+            Item item0_ 
+        where
+            datediff(?, item0_.createdOn, item0_.auctionEnd)>1
+2023-06-09 16:13:47,477 TRACE [main] o.h.t.d.s.BasicBinder o.h.t.d.s.BasicBinder.bind():64 binding parameter [1] as [VARCHAR] - [DAY]
+2023-06-09 16:13:47,477 WARN  [main] o.h.e.j.s.SqlExceptionHelper o.h.e.j.s.SqlExceptionHelper.logExceptions():137 SQL Error: 1582, SQLState: 42000
+2023-06-09 16:13:47,477 ERROR [main] o.h.e.j.s.SqlExceptionHelper o.h.e.j.s.SqlExceptionHelper.logExceptions():142 Incorrect parameter count in the call to native function 'datediff'
+```
 
 Syntax error as also reported in:
 
@@ -130,4 +173,41 @@ Date:   Wed Mar 6 21:02:33 2019 +0800
  
 $ git bisect reset
 ```
+
+#### [workaround] Unexpected behavior of being lazy loaded or byte enhanced or both
+
+Test case affected: LazyProxyCollections#lazyEntityProxies().
+
+* Also: FetchLoadGraph#loadBidBidderItem().
+
+Current status: these verifications against the returned entity objects are disabled:
+
+* being lazy loaded: persistenceUtil.isLoaded(item) and persistenceUtil.isLoaded(item, "seller").
+* being initialized or not: Hibernate.isInitialized(item).
+  * Byte enhanced entity objects are treated as uninitialized. See its implementation.
+
+Phenomenon:
+
+* It draw our attention because of test failure.
+* In day one during playing with the code, the entity object returned by em.getReference() is byte enhanced (having the member "$$_hibernate_attributeInterceptor"), which surprises me. I treat this discovery as a newly found feature with joy.
+* In day two, suddenly, it become a proxy (as expected by Googled web pages and ChatGPT). Absolutely no code changed; just the dev machine rebooted (C940 got garbage contents in GUI and I decided to upgrade the iGPU driver to latest stable in the hope to solve it).
+  * What makes us mad is that at the same time, entity objects in FetchLoadGraph#loadBidBidderItem() are byte-enhanced.
+
+More info:
+
+* Status control shall be considered part of implementation details, may change quickly and without notice.
+* However, the authors are geeks, willing to explore such details.
+* But we as ordinary readers shall keep ourselves in safe zone.
+
+#### [unsolved] IncompatibleClassChangeError: Class org.hibernate.collection.internal.PersistentMap does not implement the requested interface java.util.Collection
+
+
+
+#### [unsolved] Random test failures
+
+| Test Class                     | Failure                                                |      |      |      |
+| ------------------------------ | ------------------------------------------------------ | ---- | ---- | ---- |
+| org.jpwh.test.filtering.Envers | Envers.auditLogging:177 expected [Foo] but found [Bar] |      |      |      |
+| org.jpwh.test.filtering.Envers | Envers.auditLogging:186 NullPointer                    |      |      |      |
+|                                |                                                        |      |      |      |
 

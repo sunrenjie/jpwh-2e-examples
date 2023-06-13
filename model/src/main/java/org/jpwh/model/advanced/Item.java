@@ -59,7 +59,9 @@ public class Item {
     protected AuctionType auctionType = AuctionType.HIGHEST_BID;
 
     @org.hibernate.annotations.Formula(
-        "substr(DESCRIPTION, 1, 12) || '...'"
+        // At least works with MySQL and H2.
+        // 1. `||` operator does not work with MySQL.
+        "concat(substr(description, 1, 12), '...')"
     )
     protected String shortDescription;
 

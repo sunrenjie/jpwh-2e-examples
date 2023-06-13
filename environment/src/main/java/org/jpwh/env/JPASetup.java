@@ -1,6 +1,5 @@
 package org.jpwh.env;
 
-import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.internal.util.StringHelper;
 
 import javax.persistence.EntityManager;
@@ -51,10 +50,27 @@ public class JPASetup {
         // Don't use hibernate.hbm2ddl.auto value. Seen from source code,
         // the entire hbm2ddl tool and package org.hibernate.tool.hbm2ddl are deprecated.
         // Note: only enable it in dev env !!!
-        properties.put(AvailableSettings.HBM2DDL_DATABASE_ACTION, "drop-and-create");
+        properties.put(org.hibernate.cfg.AvailableSettings.HBM2DDL_DATABASE_ACTION, "drop-and-create");
+
+        // Runtime Byte code enhancements related. Yet to figure out its usefulness and compare it with compile-time
+        // enhancement via the hibernate-enhance-maven-plugin .
+        // properties.put(org.hibernate.jpa.AvailableSettings.ENHANCER_ENABLE_DIRTY_TRACKING, "true");
+        // properties.put(org.hibernate.jpa.AvailableSettings.ENHANCER_ENABLE_LAZY_INITIALIZATION, "true");
+        // properties.put(org.hibernate.jpa.AvailableSettings.ENHANCER_ENABLE_ASSOCIATION_MANAGEMENT, "true");
+        // properties.put(org.hibernate.cfg.AvailableSettings.USE_REFLECTION_OPTIMIZER, "true");
 
         // Select database SQL dialect
-        properties.put("hibernate.dialect", databaseProduct.hibernateDialect);
+        // In order for DatabaseProduct.MYSQL to migrate from MySQL57InnoDBDialect to MySQL57Dialect or others,
+        // we will also have to set the db storage engine here.
+        // We will leave hibernate.dialect undefined for MySQL, such that the best dialect will be determined in
+        // org.hibernate.dialect.Database.MYSQL#resolveDialect(). However, one thing to note is that, database-object
+        // dialect-scope instructions in hibernate-mapping XML files shall be defined for all possibly supported MySQL
+        // versions. Fortunately, multiple dialect-scope instructions are allowed for one database-object.
+        if (databaseProduct.equals(DatabaseProduct.MYSQL)) {
+            properties.put("hibernate.dialect.storage_engine", "innodb");
+        } else {
+            properties.put("hibernate.dialect", databaseProduct.hibernateDialect);
+        }
 
         entityManagerFactory = Persistence.createEntityManagerFactory(getPersistenceUnitName(), properties);
     }
