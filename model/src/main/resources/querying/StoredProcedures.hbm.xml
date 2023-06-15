@@ -75,7 +75,7 @@
         <drop>
             drop function FIND_ITEMS()
         </drop>
-        <dialect-scope name="org.hibernate.dialect.PostgreSQL82Dialect"/>
+        <dialect-scope name="org.hibernate.dialect.PostgreSQL10Dialect"/>
     </database-object>
 
 </hibernate-mapping>

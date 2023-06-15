@@ -28,6 +28,8 @@ References:
 
 #### Running tests with MySQL
 
+The project is now modified such that the MySQL dialect actually used is determined in runtime by actually querying the db for version. We shall see console output for the exact class. The obsolete hibernate-mapping XML files need precise dialect matching for dialect-scope rules in order to enable a `<database-object>`. Pragmatically, these two MySQL db versions and dialects are actively supported: MySQL57Dialect and MySQL8Dialect.
+
 Add the JVM options, for example, to mvn test command line:
 
 ```
@@ -36,11 +38,11 @@ mvn test -Ddatabase=MYSQL -DconnectionURL=jdbc:mysql://jpwh_2e_examples:MyNewPas
 
 * Test NG @Test groups attribute is a way to group tests, such that we could selectively run tests that belong to specific group(s).
 * Here we don't need to define a JVM arg `-Dgroups=MYSQL `, because it will be implied by the database arg. See DatabaseTestMethodSelector as defined as method-selector in AllTests.tng.xml.
-* If we define JVM arg `-Dtest=TestClassFoo`, tests belong to POSTGRESQL group will be run as well. Example: CallStoredProcedures#callReturningRefCursorNative().
+* Observation: If we define JVM arg `-Dtest=CallStoredProcedures`, #callReturningRefCursorNative() which belongs to POSTGRESQL group will be run as well. Don't know why.
 
 For IntelliJ IDEA, add it to the TestNG template.
 
-For command line, use it:
+For command line, use it (borrowed from elsewhere; not yet verified):
 
 ```
 # maven-surefire-plugin unit tests
@@ -49,6 +51,22 @@ mvn test -DsurefireArgLine="-Ddatabase=mysql -DconnectionURL=jdbc:mysql://xxx"
 # maven-failsafe-plugin integration tests
 mvn verify -DargLine="-Ddatabase=mysql -DconnectionURL=jdbc:mysql://xxx"
 ```
+
+#### Running tests with PostgreSQL (PG)
+
+The project is updated to use PG dialect PostgreSQL10Dialect; so better run with PG >= 10. We actually tested it with PG 15.3 .
+
+Also, quote https://jdbc.postgresql.org/documentation/ (current PG JDBC version 42.6.0):
+
+```
+The current version of the driver should be compatible with PostgreSQL® 8.2 and higher using the version 3.0 of the PostgreSQL® protocol, and it’s compatible with Java 8 (JDBC 4.2) and above.
+```
+
+```
+mvn test -Ddatabase=POSTGRESQL
+```
+
+* Note for PG, we should not define a connectionURL JVM arg. So be sure to set the correct db address/port/username/password parameters in DatabaseProduct.POSTGRESQL .
 
 ### Architecture notes
 

@@ -64,12 +64,12 @@ public enum DatabaseProduct {
                     );
                 }
                 ds.getDriverProperties().put("serverName", "127.0.0.1");
-                ds.getDriverProperties().put("databaseName", "test");
-                ds.getDriverProperties().put("user", "test");
-                ds.getDriverProperties().put("password", "test");
+                ds.getDriverProperties().put("databaseName", "jpwh_2e_examples");
+                ds.getDriverProperties().put("user", "jpwh_2e_examples");
+                ds.getDriverProperties().put("password", "MyNewPass4!");
             }
         },
-        org.hibernate.dialect.PostgreSQL82Dialect.class.getName()
+        org.hibernate.dialect.PostgreSQL10Dialect.class.getName()
     ),
 
     MYSQL(
